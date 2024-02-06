@@ -27,12 +27,21 @@ void printSequence(Sequence<T>* seq) {
     }
     std::cout << std::endl;
 }
+template <typename T>
+void printSequence(Sequence<T>& seq) {
+    auto e = seq.GetEnumerator();
+    while (e->next()) {
+        std::cout << *(*(*e)) << ' ';
+    }
+    std::cout << std::endl;
+}
+
 int main() {
     int a[] =  {12, 4, 5, 6, 7, 3, 1, 15};
     shared_ptr<int> b[] = {make_shared<int>(12), make_shared<int>(3), make_shared<int>(7), make_shared<int>(1)};
     int size = 8;
-    auto Iarray = new ArraySequence<int>(a, 8);
-    Sequence<shared_ptr<int>> *array2 = Iarray->Map<ArraySequence<shared_ptr<int>>,  shared_ptr<int>>(sharedFromT<int>);
+    auto Iarray = make_shared<ArraySequence<int>>(a, 8);
+    shared_ptr< Sequence<shared_ptr<int>>> array2(Iarray->Map<ArraySequence<shared_ptr<int>>,  shared_ptr<int>>(sharedFromT<int>));
     ArraySequence<shared_ptr<int>> array(b, 4);
     std::cout << "Original array: ";
     auto e = array.GetEnumerator();
@@ -50,8 +59,6 @@ int main() {
     }
     std::cout << std::endl;
     insertionSort(*array2, compareAscending);
-    printSequence(array2);
-    delete array2;
-    delete Iarray;
+    printSequence(*array2);
     return 0;
 }

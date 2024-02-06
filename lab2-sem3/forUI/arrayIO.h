@@ -1,52 +1,41 @@
 #ifndef VECTOR_IO
 #define VECTOR_IO
+#include <algorithm>
+#include <array>
+#include <functional>
+#include <iostream>
+#include <string_view>
 #include <iostream>
 #include "stdio.h"
 #include "../DynamicArray.h"
-#include "../Complex.h"
-#include "../Matrix.h"
-#include "../MathVector.h"
-#include "../Polynomial.h"
+#include "../Sequence.h"
 
-std::ostream &operator<<(std::ostream &os, Complex const &m) {
-    return os << "(" << m.Re() << " + " << m.Im() << " i)";
+template <typename T>
+void printSequence(Sequence<T>* seq) {
+    auto e = seq->GetEnumerator();
+    while (e->next()) {
+        std::cout << *(*(*e)) << ' ';
+    }
+    std::cout << std::endl;
 }
 template <typename T>
-std::ostream &operator<<(std::ostream &os, Matrix<T> const &m) {
-	os << "{";
-	for (size_t i = 0; i < m.GetHight(); i++) {
-		for (size_t j = 0; j < m.GetLength(); j++) {
-			os << m.Get(j, i) << " ";
-		}
-		os << ";";
-	}
-
-    return os << "}";
+void printSequence(Sequence<T>& seq) {
+    auto e = seq.GetEnumerator();
+    while (e->next()) {
+        std::cout << *(*(*e)) << ' ';
+    }
+    std::cout << std::endl;
 }
 template <typename T>
-std::ostream &operator<<(std::ostream &os, MathVector<T> const &v) {
-	os << "{";
-	for (size_t i = 0; i < v.GetDimension(); i++) {
-		os << v.Get(i) << " ";
-	}
-    return os << "}";
+unique_ptr<T> uniqueFromT(T element) {
+    return unique_ptr<T>(new T(element));
 }
 template <typename T>
-std::ostream &operator<<(std::ostream &os, Polynomial<T> const &p) {
-	if (p.GetLength() > 0) {
-		os << p.Get(0) << " + ";
-	}
-	for (size_t i = 1; i < p.GetLength(); i++) {
-		os << p.Get(i) << "*x^" << i << " + ";
-	}
-    return os;
+shared_ptr<T> sharedFromT(T element) {
+    return make_shared<T>(element);
 }
 
-/*
-class arrayIO {
-	public
-}
-*/
+
 
 int checkInput(int *n) {
 	int sres = scanf("%d", n);
@@ -74,13 +63,7 @@ int checkInput(double *n) {
 	}
 	return 0;
 }
-int checkInput(Complex *n) {
-	double r, im;
-	checkInput(&r);
-	checkInput(&im);
-	*n = Complex(r, im);
-	return 0;
-}
+
 
 template <typename T>
 DynamicArray<T> input(size_t len) {
@@ -95,16 +78,16 @@ DynamicArray<T> input(size_t len) {
 	}
 	return DynamicArray<T>(arr, len);
 }
-template <typename T> Matrix<T> inputM(size_t a, size_t b) {
-	if (a < 0 || b < 0)
-		throw std::length_error("lengths can't be negative");
-	return Matrix<T>(input<T>(a*b), a, b);
+template <typename T>
+Sequence<T> *inputSeq() {
+	int len;
+	std::cout << "Lengh input: ";
+	checkInput(&len);
+	while (len <= 0) {
+		std::cout << "length must be  positive integer" << std::endl;
+		checkInput(&len);
+	}
+	ArraySequence<T> *seq = new ArraySequence<T>(input<T>(len));
+	return seq;
 }
-template <typename T> Polynomial<T> inputP(size_t deg) {
-	if (deg <= 0)
-		throw std::length_error("Degree can't be negative");
-	return Polynomial<T>(input<T>(deg));
-}
-
-
 #endif

@@ -38,7 +38,7 @@ public:
     void Set(int index, T value);
     void Resize(size_t newSize);
     void Resize(size_t newSize, size_t realSize);
-    void ExpandingResize(size_t newSize);
+    void ExpandResize(size_t newSize);
     void AddSize(size_t adding);
 };
 
@@ -165,7 +165,7 @@ void DynamicArray<T> :: Resize(size_t newSize, size_t realSize) {
 
 
 template <typename T>
-void DynamicArray<T> :: ExpandingResize(size_t newSize) {
+void DynamicArray<T> :: ExpandResize(size_t newSize) {
     if (newSize < 0)
         throw std::length_error("Size can't be negative");
     if (newSize <= realSize) {

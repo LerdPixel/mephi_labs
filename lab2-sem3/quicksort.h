@@ -52,3 +52,7 @@ void quicksort(Sequence<shared_ptr<T>>& arr, int start, int end, bool (*compare)
     // Sorting the right part
     quicksort(arr, p + 1, end, compare);
 }
+template <typename T>
+void quickSort(Sequence<shared_ptr<T>>& arr, bool (*compare)(const T&, const T&)) {
+    quicksort(arr, 0, arr.GetLength()-1, compare);
+}
