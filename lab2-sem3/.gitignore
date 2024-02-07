@@ -3,10 +3,10 @@
 c
 cpp
 test
+main
 all_tests_headers.h
 
 # Compiled Object files
-*.dSYM
 *.slo
 *.lo
 *.o
@@ -35,3 +35,8 @@ all_tests_headers.h
 *.exe
 *.out
 *.app
+
+# Debugs
+*.yml
+*.plist
+*.dSYM/

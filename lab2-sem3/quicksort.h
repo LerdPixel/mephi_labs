@@ -7,25 +7,24 @@ int partition(Sequence<shared_ptr <T>>& arr, int start, int end, bool (*compare)
 {
     T pivot = *arr[start];
     int count = 0;
-    for (int i = start + 1; i <= end; i++) {
+    for (int i = start + 1; i <= end; ++i) {
         if (compare(*arr[i], pivot))
-            count++;
+            ++count;
     }
     // Giving pivot element its correct position
     int pivotIndex = start + count;
     swap(arr[pivotIndex], arr[start]);
- 
-    // Sorting left and right parts of the pivot element
+
     int i = start, j = end;
  
     while (i < pivotIndex && j > pivotIndex) {
  
         while (compare(*arr[i], pivot)) {
-            i++;
+            ++i;
         }
  
         while (compare(pivot, *arr[j])) {
-            j--;
+            --j;
         }
  
         if (i < pivotIndex && j > pivotIndex) {
@@ -39,17 +38,10 @@ int partition(Sequence<shared_ptr <T>>& arr, int start, int end, bool (*compare)
 template <typename T>
 void quicksort(Sequence<shared_ptr<T>>& arr, int start, int end, bool (*compare)(const T&, const T&))
 {
-    // base case
     if (start >= end)
         return;
- 
-    // partitioning the array
     int p = partition(arr, start, end, compare);
- 
-    // Sorting the left part
     quicksort(arr, start, p - 1, compare);
- 
-    // Sorting the right part
     quicksort(arr, p + 1, end, compare);
 }
 template <typename T>

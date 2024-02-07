@@ -32,14 +32,14 @@ public:
 		else
 			ref_count = new size_t(1);		
 	}
-	//constexpr shared_ptr(shared_ptr)
 	shared_ptr& operator=(const shared_ptr& other) noexcept {
 		if  (this != &other) {
 			release();
 			_pointer = other._pointer;
 			ref_count = other.ref_count;
-			weak_ref_count = other.weak_ref_count;			
-			++(*ref_count);
+			weak_ref_count = other.weak_ref_count;
+			if (ref_count != nullptr)	
+				++(*ref_count);
 		}
 		return *this;
 	}
@@ -96,13 +96,17 @@ private:
 			if (*ref_count > 0) {
 				return;
 			}
-			if (*weak_ref_count == 0) {
-				delete weak_ref_count;
-				delete ref_count;
-/* 				_deleter(_pointer);
-				return; */
+			if (weak_ref_count != nullptr) {
+				if (*weak_ref_count == 0) {
+					delete weak_ref_count;
+					delete ref_count;
+				}
 			}
-			_deleter(_pointer);
+			else {
+				delete ref_count;
+			}
+			if (_pointer != nullptr)
+				_deleter(_pointer);
 		}
 	}
 };

@@ -73,12 +73,12 @@ public:
     }
     void Append(T item) override {
         size_t currentLength = this->elements->GetLength();
-        this->elements->ExpandingResize(currentLength + 1);
+        this->elements->ExpandResize(currentLength + 1);
         this->elements->Set(currentLength, item);
     }
     void Prepend(T item) override {
         size_t currentLength = this->elements->GetLength();
-        this->elements->ExpandingResize(currentLength + 1);
+        this->elements->ExpandResize(currentLength + 1);
         for (int i = currentLength - 1; i >= 0; --i) {
             this->elements->Set(i + 1, this->elements->Get(i));
         }
@@ -91,7 +91,7 @@ public:
         if (index < 0 || index > this->elements->GetLength())
             throw std::out_of_range("IndexOutOfRange");
         size_t length = this->elements->GetLength();
-        this->elements->ExpandingResize(length + 1);
+        this->elements->ExpandResize(length + 1);
         for (int i = length; i > index; --i) {
             this->elements->Set(i, this->elements->Get(i-1));
         }

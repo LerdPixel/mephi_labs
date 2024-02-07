@@ -7,10 +7,13 @@
 #include <memory>
 #include "quicksort.h"
 #include "insertionSort.h"
+#include "QuickSorter.h"
+#include "InsertionSorter.h"
 
 bool compareAscending(const int& a, const int& b) {
     return a < b;
 }
+bool comparator(int a, int b) { return a < b; }
 template <typename T>
 unique_ptr<T> uniqueFromT(T element) {
     return unique_ptr<T>(new T(element));
@@ -35,13 +38,21 @@ void printSequence(Sequence<T>& seq) {
     }
     std::cout << std::endl;
 }
+template <typename T>
+void printSequenceScalar(Sequence<T>& seq) {
+    auto e = seq.GetEnumerator();
+    while (e->next()) {
+        std::cout << *(*e) << ' ';
+    }
+    std::cout << std::endl;
+}
 
 int main() {
     int a[] =  {12, 4, 5, 6, 7, 3, 1, 15};
     shared_ptr<int> b[] = {make_shared<int>(12), make_shared<int>(3), make_shared<int>(7), make_shared<int>(1)};
     int size = 8;
-    auto Iarray = make_shared<ArraySequence<int>>(a, 8);
-    shared_ptr< Sequence<shared_ptr<int>>> array2(Iarray->Map<ArraySequence<shared_ptr<int>>,  shared_ptr<int>>(sharedFromT<int>));
+    shared_ptr<Sequence<int>> Iarray(new ArraySequence<int>(a, 8));
+/*     shared_ptr< Sequence<shared_ptr<int>>> array2(Iarray->Map<ArraySequence<shared_ptr<int>>,  shared_ptr<int>>(sharedFromT<int>));
     ArraySequence<shared_ptr<int>> array(b, 4);
     std::cout << "Original array: ";
     auto e = array.GetEnumerator();
@@ -59,6 +70,9 @@ int main() {
     }
     std::cout << std::endl;
     insertionSort(*array2, compareAscending);
-    printSequence(*array2);
+    printSequence(*array2); */
+    printSequenceScalar(*Iarray);
+    InsertionSorter<int>(comparator, Iarray).Sort();
+    printSequenceScalar(*Iarray);
     return 0;
 }
