@@ -72,7 +72,7 @@ int main() {
     insertionSort(*array2, compareAscending);
     printSequence(*array2); */
     printSequenceScalar(*Iarray);
-    InsertionSorter<int>(comparator, Iarray).Sort();
+    QuickSorter<int>(comparator, Iarray).Sort();
     printSequenceScalar(*Iarray);
     return 0;
 }

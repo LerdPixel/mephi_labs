@@ -42,11 +42,12 @@ protected:
         quicksort(start, p - 1);
         quicksort(p + 1, end);
     }
-public:
-    QuickSorter(bool (*cmp)(T, T), shared_ptr<Sequence<T>> sequence) : Sorter<T>(cmp, sequence) {}
-    void Sort() override {
+    void _sort() override {
         quicksort(0, this->_sequence->GetLength()-1);
     }
+public:
+    QuickSorter(bool (*cmp)(T, T), shared_ptr<Sequence<T>> sequence) : Sorter<T>(cmp, sequence) {}
+
 };
 
 

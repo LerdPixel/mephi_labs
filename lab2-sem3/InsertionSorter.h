@@ -4,9 +4,8 @@
 
 template <typename T>
 class InsertionSorter : public Sorter<T> {
-public:
-    InsertionSorter(bool (*cmp)(T, T), shared_ptr<Sequence<T>> sequence) : Sorter<T>(cmp, sequence) {}
-    void Sort() override {
+protected:
+    void _sort() override {
         int j;
         T key;
         for (int i = 1; i < this->_sequence->GetLength(); ++i) {
@@ -17,6 +16,8 @@ public:
             (*this->_sequence)[j + 1] = key;
         }
     }
+public:
+    InsertionSorter(bool (*cmp)(T, T), shared_ptr<Sequence<T>> sequence) : Sorter<T>(cmp, sequence) {}
 };
 
 #endif
