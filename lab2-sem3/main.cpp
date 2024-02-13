@@ -14,6 +14,7 @@ bool compareAscending(const int& a, const int& b) {
     return a < b;
 }
 bool comparator(int a, int b) { return a < b; }
+
 template <typename T>
 unique_ptr<T> uniqueFromT(T element) {
     return unique_ptr<T>(new T(element));
