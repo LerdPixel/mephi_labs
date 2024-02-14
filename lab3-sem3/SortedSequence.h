@@ -58,6 +58,15 @@ public:
             isSorted = true;
         }
     }
+    SortedSequence(shared_ptr<Sequence<T>> sequence, bool (*cmp)(T, T) = baseComparator, bool(*isEqual)(T, T) = baseEqual) : data(new ArraySequence<T>(sequence.get())), _cmp(cmp), _isEqual(isEqual) {
+        setSorts();
+        notSortedCount = sequence->GetLength();
+        if (notSortedCount > 1) {
+            isSorted = false;
+        } else {
+            isSorted = true;
+        }
+    }
     void Add(T item) override {
         isSorted = false;
         ++notSortedCount;
@@ -83,6 +92,9 @@ public:
             }
         }
         return -1;
+    }
+    T Get(T element) override {
+        return data->Get(IndexOf(element)); // Sort the list to ensure that it's sorted before getting an element from it.
     }
     shared_ptr<Sequence<T>> GetValues() override {
         Sort();

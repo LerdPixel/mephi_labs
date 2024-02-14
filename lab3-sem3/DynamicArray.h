@@ -137,9 +137,6 @@ void DynamicArray<T> :: Resize(size_t newSize) {
     for (i = 0; i < (newSize < this->length ? newSize : this->length); ++i) {
         array[i] = this->array[i];
     }
-    for ( ; i < newSize; ++i) {
-        array[i] = 0;
-    }
     delete [] this->array;
     this->realSize = newSize;
     this->array = array;
@@ -153,9 +150,6 @@ void DynamicArray<T> :: Resize(size_t newSize, size_t realSize) {
     size_t i;
     for (i = 0; i < (newSize < this->length ? newSize : this->length); ++i) {
         array[i] = this->array[i];
-    }
-    for ( ; i < newSize; ++i) {
-        array[i] = 0;
     }
     delete [] this->array;
     this->realSize = realSize;

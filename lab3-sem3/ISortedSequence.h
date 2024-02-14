@@ -1,3 +1,4 @@
+#pragma once
 #include "Sequence.h"
 #include "Sorter.h"
 
@@ -10,6 +11,7 @@ public:
     virtual T GetLast() = 0;
     virtual void Add(T ) = 0;
     virtual int IndexOf(T ) = 0;
+    virtual T Get(T ) = 0;
     virtual shared_ptr<Sequence<T>> GetValues() = 0;
     virtual ~ISortedSequence() {}
 };

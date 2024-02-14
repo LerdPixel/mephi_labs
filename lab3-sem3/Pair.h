@@ -6,11 +6,18 @@ private:
     TKey key;
     TValue value;
 public:
-    Pair(const TKey& k, const TValue& v) : key(k), value(v) {}
-    TKey GetKey() {
+    Pair(TKey k) : key(k) {}
+    Pair(TKey k, TValue v) : key(k), value(v) {}
+    TKey GetKey() const {
         return key;
     }
-    TValue GetValue() {
+    TValue GetValue() const {
         return value;
+    }
+    TValue& GetValueRef() {
+        return value;
+    }
+    void SetValue(TValue v) {
+        value = v;
     }
 };
