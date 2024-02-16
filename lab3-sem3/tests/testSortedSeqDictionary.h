@@ -8,9 +8,16 @@
 struct SortedSequenceDictionaryTests : public testing::Test {
     shared_ptr<Sequence<int>> ks;
     shared_ptr<Sequence<int>> vs; 
+    shared_ptr<Sequence<std::string>> ss;
+    shared_ptr<Sequence<int>> sv; 
     shared_ptr<SortedSequenceDictionary<int, int>> dd;
-
+    shared_ptr<SortedSequenceDictionary<std::string, int>> ssd;
     void SetUp() {
+        std::string skeys[] = {"15", "jaba", "slavik"};
+        int sva[] = {1, 2, 3};
+        ss = shared_ptr<Sequence<std::string>>(new ArraySequence<std::string>(skeys, 3));
+        sv = shared_ptr<Sequence<int>>(new ArraySequence<int>(sva, 3));
+        ssd = shared_ptr<SortedSequenceDictionary<std::string, int>>(new SortedSequenceDictionary<std::string, int>(ss, sv));
         int ka[] = {1,4,5,6,-1};
         int va[] = {11,14,15,16,-11};
         ks = shared_ptr<Sequence<int>>(new ArraySequence<int>(ka, 5));

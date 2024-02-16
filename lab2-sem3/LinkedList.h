@@ -2,6 +2,7 @@
 #define LINKED_LIST_H
 #include "Node.h"
 #include "ICollection.h"
+#include "smart_ptrs/shared_ptr.h"
 
 template <typename T>
 class LinkedList : public IEnumerable<T>, public ICollection<T> {
@@ -36,7 +37,7 @@ public:
     LinkedList(Node<T>* head);
     LinkedList(const ICollection<T> &collection);
     ~LinkedList();
-    std::shared_ptr<IEnumerator<T>> GetEnumerator() override;
+    shared_ptr<IEnumerator<T>> GetEnumerator() override;
     T GetFirst() const;
     T GetLast() const;
     T Get(size_t index) const override;
@@ -119,8 +120,8 @@ LinkedList<T> :: ~LinkedList() {
     }
 }
 template <typename T>
-std::shared_ptr<IEnumerator<T>> LinkedList<T> :: GetEnumerator() {
-    return std::shared_ptr<IEnumerator<T>>(new LinkedList<T>::LinkedListEnumerator(this));
+shared_ptr<IEnumerator<T>> LinkedList<T> :: GetEnumerator() {
+    return shared_ptr<IEnumerator<T>>(new LinkedList<T>::LinkedListEnumerator(this));
 }
 template <typename T>
 T LinkedList<T> :: GetFirst() const {

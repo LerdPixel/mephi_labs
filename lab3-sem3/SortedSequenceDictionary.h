@@ -10,7 +10,7 @@ protected:
     typedef SortedSequence<shared_ptr<Pair<TKey, TValue>>> SortedPairs;
     shared_ptr<SortedPairs> sortedSequence;
     shared_ptr<Pair<TKey, TValue>> nullValuePair(const TKey key) {
-        return make_shared<Pair<TKey, TValue>>(key);
+        return shared_ptr<Pair<TKey, TValue>>(new Pair<TKey, TValue>(key));
     }
 public:
     SortedSequenceDictionary() : sortedSequence(new SortedPairs(smartPtrPairComparator, smartPtrPairEqual)) {}
@@ -22,12 +22,12 @@ public:
         auto eKey = keys->GetEnumerator();
         auto eValue = values->GetEnumerator();
         while (eKey->next() && eValue->next()) {
-            pairs->Append(make_shared<Pair<TKey,TValue>>(*(*eKey), *(*eValue)));
+            pairs->Append(shared_ptr<Pair<TKey,TValue>>(new Pair<TKey,TValue>(*(*eKey), *(*eValue))));
         }
         sortedSequence = shared_ptr<SortedPairs>(new SortedPairs(pairs, smartPtrPairComparator, smartPtrPairEqual));
     }
     void Add(TKey key, TValue value) override {
-        sortedSequence->Add(make_shared<Pair<TKey, TValue>>(key, value));
+        sortedSequence->Add(shared_ptr<Pair<TKey, TValue>>(new Pair<TKey, TValue>(key, value)));
     }
     bool ContainsKey(TKey key) override {
         return sortedSequence->IndexOf(nullValuePair(key)) != -1;

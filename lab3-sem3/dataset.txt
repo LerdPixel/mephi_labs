@@ -1,0 +1,70 @@
+| Emily      | Johnson      | New York      | USA         | 32  | Female | 165    | 55     | Marketing Manager | 85000      |
+| Michael    | Smith        | Los Angeles   | USA         | 45  | Male   | 180    | 80     | Software Engineer| 120000     |
+| Sophia     | Williams     | London        | UK          | 28  | Female | 170    | 60     | Financial Analyst| 75000      |
+| Ethan      | Brown        | Sydney        | Australia   | 36  | Male   | 175    | 75     | Nurse             | 95000      |
+| Ava        | Jones        | Toronto       | Canada      | 41  | Female | 168    | 65     | Project Manager  | 110000     |
+| James      | Martinez     | Paris         | France      | 29  | Male   | 178    | 85     | Graphic Designer | 80000      |
+| Olivia     | Garcia       | Berlin        | Germany     | 34  | Female | 163    | 58     | Lawyer            | 105000     |
+| Liam       | Lopez        | Tokyo         | Japan       | 39  | Male   | 185    | 90     | Sales Manager     | 130000     |
+| Charlotte  | Lee          | Madrid        | Spain       | 27  | Female | 166    | 62     | Product Manager   | 90000      |
+| Noah       | Harris       | Rome          | Italy       | 33  | Male   | 172    | 70     | Teacher           | 80000      |
+| Mia        | Anderson     | Beijing       | China       | 30  | Female | 167    | 60     | Doctor            | 125000     |
+| Elijah     | Martin       | Moscow        | Russia      | 37  | Male   | 180    | 88     | Engineer          | 110000     |
+| Emma       | Perez        | Sao Paulo     | Brazil      | 31  | Female | 165    | 55     | Scientist         | 115000     |
+| Alexander  | Nguyen       | Mexico City   | Mexico      | 35  | Male   | 178    | 85     | Architect         | 100000     |
+| Harper     | Kim          | Seoul         | South Korea | 29  | Female | 163    | 57     | Accountant        | 95000      |
+| Ethan      | Wang         | Seoul         | South Korea | 42  | Male   | 180    | 85     | Consultant        | 85000      |
+| Evelyn     | Park         | Seoul         | South Korea | 26  | Female | 162    | 54     | Entrepreneur      | 90000      |
+| Benjamin   | Kim          | Tokyo         | Japan       | 38  | Male   | 175    | 80     | Journalist        | 95000      |
+| Amelia     | Park         | Seoul         | South Korea | 40  | Female | 165    | 56     | Software Developer| 120000     |
+| William    | Kim          | Seoul         | South Korea | 32  | Male   | 177    | 82     | Designer          | 85000      |
+| Isabella   | Lee          | Shanghai      | China       | 31  | Female | 168    | 62     | HR Manager        | 80000      |
+| Jacob      | Kim          | Seoul         | South Korea | 34  | Male   | 182    | 88     | Marketing Analyst | 75000      |
+| Mia        | Nguyen       | Ho Chi Minh   | Vietnam     | 29  | Female | 164    | 59     | Operations Manager| 90000      |
+| Alexander  | Park         | Seoul         | South Korea | 36  | Male   | 179    | 84     | Financial Advisor | 110000     |
+| Sofia      | Wong         | Hong Kong     | China       | 33  | Female | 166    | 61     | Data Scientist    | 115000     |
+| Jackson    | Chen         | Beijing       | China       | 35  | Male   | 180    | 85     | Web Developer     | 95000      |
+| Olivia     | Kim          | Seoul         | South Korea | 28  | Female | 167    | 60     | Content Writer    | 80000      |
+| Aiden      | Park         | Seoul         | South Korea | 39  | Male   | 181    | 87     | UX/UI Designer    | 100000     |
+| Emma       | Tran         | Hanoi         | Vietnam     | 32  | Female | 163    | 58     | Software Engineer | 120000     |
+| William    | Kim          | Seoul         | South Korea | 26  | Male   | 175    | 80     | Sales Associate   | 75000      |
+| Mia        | Park         | Seoul         | South Korea | 37  | Female | 170    | 63     | Human Resources   | 90000      |
+| Liam       | Kim          | Seoul         | South Korea | 31  | Male   | 178    | 85     | Business Analyst  | 85000      |
+| Amelia     | Lee          | Busan         | South Korea | 35  | Female | 166    | 61     | Social Media Manager | 95000   |
+| Benjamin   | Nguyen       | Ho Chi Minh   | Vietnam     | 29  | Male   | 173    | 75     | Content Creator  | 80000      |
+| Ava        | Park         | Seoul         | South Korea | 40  | Female | 168    | 62     | Project Coordinator | 90000  |
+| James      | Kim          | Seoul         | South Korea | 34  | Male   | 180    | 86     | Account Manager   | 110000     |
+| Olivia     | Lee          | Seoul         | South Korea | 27  | Female | 165    | 56     | Product Designer  | 115000     |
+| Liam       | Nguyen       | Ho Chi Minh   | Vietnam     | 38  | Male   | 177    | 83     | Financial Analyst | 95000      |
+| Isabella   | Kim          | Seoul         | South Korea | 29  | Female | 169    | 64     | Marketing Specialist | 80000  |
+| Noah       | Park         | Seoul         | South Korea | 42  | Male   | 182    | 88     | Software Tester   | 85000      |
+| Ava        | Lee          | Seoul         | South Korea | 33  | Female | 167    | 60     | Business Development | 90000 |
+| William    | Nguyen       | Ho Chi Minh   | Vietnam     | 36  | Male   | 180    | 85     | Data Analyst     | 100000     |
+| Harper     | Park         | Seoul         | South Korea | 28  | Female | 164    | 58     | UX/UI Designer   | 120000     |
+| Ethan      | Kim          | Seoul         | South Korea | 35  | Male   | 176    | 82     | Web Designer     | 75000      |
+| Emma       | Lee          | Seoul         | South Korea | 31  | Female | 168    | 62     | UI/UX Designer   | 90000      |
+| Noah       | Nguyen       | Ho Chi Minh   | Vietnam     | 39  | Male   | 179    | 84     | Software Engineer| 85000      |
+| Mia        | Kim          | Seoul         | South Korea | 30  | Female | 165    | 57     | Content Manager  | 90000      |
+| Alexander  | Park         | Seoul         | South Korea | 34  | Male   | 181    | 87     | Marketing Director | 110000 |
+| Olivia     | Nguyen       | Ho Chi Minh   | Vietnam     | 27  | Female | 166    | 59     | UX Designer      | 115000     |
+| Benjamin   | Kim          | Seoul         | South Korea | 32  | Male   | 175    | 80     | Frontend Developer | 95000  |
+| Ava        | Lee          | Seoul         | South Korea | 36  | Female | 170    | 63     | Backend Developer| 90000      |
+| James      | Nguyen       | Ho Chi Minh   | Vietnam     | 29  | Male   | 173    | 75     | Full Stack Developer | 85000 |
+| Amelia     | Park         | Seoul         | South Korea | 37  | Female | 168    | 62     | DevOps Engineer  | 100000     |
+| Liam       | Kim          | Seoul         | South Korea | 31  | Male   | 180    | 85     | Database Engineer| 75000      |
+| Olivia     | Lee          | Seoul         | South Korea | 42  | Female | 167    | 60     | Software Developer| 90000      |
+| Noah       | Nguyen       | Ho Chi Minh   | Vietnam     | 28  | Male   | 181    | 86     | System Administrator | 85000 |
+| Mia        | Kim          | Seoul         | South Korea | 33  | Female | 165    | 57     | Network Engineer | 90000      |
+| Alexander  | Park         | Seoul         | South Korea | 29  | Male   | 168    | 64     | IT Support       | 110000     |
+| Olivia     | Nguyen       | Ho Chi Minh   | Vietnam     | 34  | Female | 172    | 69     | Cybersecurity Analyst | 115000 |
+| Benjamin   | Kim          | Seoul         | South Korea | 30  | Male   | 177    | 83     | Network Administrator | 95000 |
+| Ava        | Lee          | Seoul         | South Korea | 35  | Female | 166    | 61     | IT Technician    | 90000      |
+| James      | Nguyen       | Ho Chi Minh   | Vietnam     | 31  | Male   | 179    | 84     | Cloud Engineer   | 85000      |
+| Amelia     | Park         | Seoul         | South Korea | 26  | Female | 168    | 62     | Data Scientist  | 100000     |
+| Liam       | Kim          | Seoul         | South Korea | 38  | Male   | 170    | 63     | Software Tester | 75000      |
+| Olivia     | Lee          | Seoul         | South Korea | 29  | Female | 175    | 80     | QA Engineer     | 90000      |
+| Noah       | Nguyen       | Ho Chi Minh   | Vietnam     | 40  | Male   | 166    | 61     | Business Analyst| 85000      |
+| Mia        | Kim          | Seoul         | South Korea | 27  | Female | 181    | 87     | Project Manager | 90000      |
+| Alexander  | Park         | Seoul         | South Korea | 34  | Male   | 165    | 57     | Business Intelligence Analyst | 110000 |
+| Olivia     | Nguyen       | Ho Chi Minh   | Vietnam     | 42  | Female | 179    | 84     | Data Engineer   | 115000     |
+| Benjamin   | Kim          | Seoul         | South Korea | 28  | Male   | 172    | 69     | Systems Analyst | 95000      |

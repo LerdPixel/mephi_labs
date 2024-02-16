@@ -41,12 +41,14 @@ shared_ptr<Sequence<Person>> personsFromFile(std::string fileName) {
                     person.country = value;
                 } else if (key == "City") {
                     person.city = value;
-                } else if (key == "Region") {
-                    person.region = value;
                 } else if (key == "Gender") {
                     person.gender = value;
-                } else if (key == "Hobby") {
-                    person.hobby = value;
+                } else if (key == "Job") {
+                    person.job = value;
+                } else if (key == "Age") {
+                    person.age = std::stod(value);
+                } else if (key == "Salary") {
+                    person.salary = std::stod(value);
                 }
             }
         }

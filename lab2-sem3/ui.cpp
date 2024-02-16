@@ -41,7 +41,7 @@ void randomInput() {
     checkInput(&top);
     std::cout << "input length:" << std::endl;
     checkInput(&count);
-    Sequence<int>* Iarray = randomArray(count, bottom, top);
+    shared_ptr<Sequence<int>> Iarray = randomSequence(count, bottom, top);
     shared_ptr<Sequence<shared_ptr<int>>> array2(Iarray->Map<ArraySequence<shared_ptr<int>>,  shared_ptr<int>>(sharedFromT<int>));
     std::cout << "sort: 0 - quick sort; 1 - insertion sort" << '\n';
     checkInput(&optionType);
@@ -77,6 +77,7 @@ void randomInput() {
     }
 } */
 int main() {
+    int exitCode = 0, optionType, dataType;
     while(exitCode != 1) {
         std::cout << "test type: 0 - random data; 1 - keybord input; 2 - comparison with std::sort ; 3 - exit" << '\n';
         checkInput(&optionType);

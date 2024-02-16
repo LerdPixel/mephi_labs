@@ -1,6 +1,6 @@
 #ifndef LINKED_LIST_SEQUENCE_H
 #define LINKED_LIST_SEQUENCE_H
-#include <memory>
+#include "smart_ptrs/shared_ptr.h"
 #include "LinkedList.h"
 #include "Sequence.h"
 
@@ -49,7 +49,7 @@ public:
     T Get(size_t index) const override {
         return elements->Get(index);
     }
-    std::shared_ptr<IEnumerator<T>> GetEnumerator() override {
+    shared_ptr<IEnumerator<T>> GetEnumerator() override {
         return elements->GetEnumerator();
     }
     Sequence<T>* GetSubsequence(size_t startIndex, size_t endIndex) const override {

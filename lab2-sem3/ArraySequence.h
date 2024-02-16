@@ -42,7 +42,7 @@ public:
         if (elements)
             delete elements;
     }
-    std::shared_ptr<IEnumerator<T>> GetEnumerator() override {
+    shared_ptr<IEnumerator<T>> GetEnumerator() override {
         return elements->GetEnumerator();
     }
     T GetFirst() const override {
@@ -73,12 +73,12 @@ public:
     }
     void Append(T item) override {
         size_t currentLength = this->elements->GetLength();
-        this->elements->ExpandResize(currentLength + 1);
+        this->elements->ExpandingResize(currentLength + 1);
         this->elements->Set(currentLength, item);
     }
     void Prepend(T item) override {
         size_t currentLength = this->elements->GetLength();
-        this->elements->ExpandResize(currentLength + 1);
+        this->elements->ExpandingResize(currentLength + 1);
         for (int i = currentLength - 1; i >= 0; --i) {
             this->elements->Set(i + 1, this->elements->Get(i));
         }
@@ -91,21 +91,21 @@ public:
         size_t length = this->elements->GetLength();
         if (index < 0 || index > length)
             throw std::out_of_range("IndexOutOfRange");
-        this->elements->ExpandResize(length + 1);
+        this->elements->ExpandingResize(length + 1);
         for (int i = length; i > index; --i) {
             this->elements->Set(i, this->elements->Get(i-1));
         }
         this->elements->Set(index, item);
     }
-    void Remove(int index) override {
+/*     void Remove(size_t index) override {
         size_t length = this->elements->GetLength();
         if (index < 0 || index >= length)
             throw std::out_of_range("IndexOutOfRange");
-        for (int i = index; i < length - 1; ++i) {
+        for (size_t i = index; i < length - 1; ++i) {
             this->elements->Set(i, this->elements->Get(i+1));
         }
-        this->elements->ExpandResize(length - 1);
-    }
+        this->elements->ExpandingResize(length - 1);
+    } */
 };
 
 #endif
