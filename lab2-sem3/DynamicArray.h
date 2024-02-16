@@ -1,11 +1,10 @@
 #ifndef DYNAMIC_ARRAY_H
 #define DYNAMIC_ARRAY_H
 #include <iostream>
-#include <memory>
+#include "smart_ptrs/shared_ptr.h"
 #include "IEnumerable.h"
 #include "IEnumerator.h"
 #include "ICollection.h"
-//using namespace std;
 
 template <typename T>
 class DynamicArray : public IEnumerable<T>, public ICollection<T> {
@@ -31,14 +30,14 @@ public:
     DynamicArray(const DynamicArray<T> &dynamicArray);
     DynamicArray(const ICollection<T> &collection);
     ~DynamicArray();
-    std::shared_ptr<IEnumerator<T>> GetEnumerator() override;
+    shared_ptr<IEnumerator<T>> GetEnumerator() override;
     T Get(size_t index) const override;
     T& operator[](size_t index);
     size_t GetLength() const override;
     void Set(int index, T value);
     void Resize(size_t newSize);
     void Resize(size_t newSize, size_t realSize);
-    void ExpandResize(size_t newSize);
+    void ExpandingResize(size_t newSize);
     void AddSize(size_t adding);
 };
 
@@ -95,8 +94,8 @@ DynamicArray<T> :: ~ DynamicArray() {
         delete [] array;
 }
 template <typename T>
-std::shared_ptr<IEnumerator<T>> DynamicArray<T> :: GetEnumerator() {
-    return std::shared_ptr<IEnumerator<T>>(new DynamicArray<T>::ArrayEnumerator(this));
+shared_ptr<IEnumerator<T>> DynamicArray<T> :: GetEnumerator() {
+    return shared_ptr<IEnumerator<T>>(new DynamicArray<T>::ArrayEnumerator(this));
 }
 
 
@@ -137,9 +136,6 @@ void DynamicArray<T> :: Resize(size_t newSize) {
     for (i = 0; i < (newSize < this->length ? newSize : this->length); ++i) {
         array[i] = this->array[i];
     }
-    for ( ; i < newSize; ++i) {
-        array[i] = 0;
-    }
     delete [] this->array;
     this->realSize = newSize;
     this->array = array;
@@ -154,9 +150,6 @@ void DynamicArray<T> :: Resize(size_t newSize, size_t realSize) {
     for (i = 0; i < (newSize < this->length ? newSize : this->length); ++i) {
         array[i] = this->array[i];
     }
-    /*for ( ; i < newSize; ++i) {
-        array[i] = 0;
-    }*/
     delete [] this->array;
     this->realSize = realSize;
     this->array = array;
@@ -165,7 +158,7 @@ void DynamicArray<T> :: Resize(size_t newSize, size_t realSize) {
 
 
 template <typename T>
-void DynamicArray<T> :: ExpandResize(size_t newSize) {
+void DynamicArray<T> :: ExpandingResize(size_t newSize) {
     if (newSize < 0)
         throw std::length_error("Size can't be negative");
     if (newSize <= realSize) {

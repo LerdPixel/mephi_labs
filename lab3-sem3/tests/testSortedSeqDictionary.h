@@ -53,23 +53,36 @@ TEST_F(SortedSequenceDictionaryTests, SortedSequenceDictionary_set_1) {
     dd->Set(5, -15);
     ASSERT_EQ(dd->Get(5), -15);
 }
-/*
-TEST_F(SortedSequenceDictionaryTests, SortedSequenceDictionary_IndexOf_ultimate_1) {
-    ASSERT_EQ(ss.IndexOf(-2), 0);
+TEST_F(SortedSequenceDictionaryTests, SortedSequenceDictionary_remove_1) {
+    dd->Remove(5);
+    ASSERT_EQ(dd->GetLength(), 4);
 }
-TEST_F(SortedSequenceDictionaryTests, SortedSequenceDictionary_IndexOf_ultimate_2) {
-    ASSERT_EQ(ss.IndexOf(6), 5);
+TEST_F(SortedSequenceDictionaryTests, SortedSequenceDictionary_remove_2) {
+    dd->Remove(6);
+    dd->Remove(-1);
+    ASSERT_EQ(dd->GetLength(), 3);
 }
-template <typename T>
-void printSequenceScalar(Sequence<T>& seq) {
-    auto e = seq.GetEnumerator();
-    while (e->next()) {
-        std::cout << *(*e) << ' ';
+
+TEST_F(SortedSequenceDictionaryTests, SortedSequenceDictionary_remove_3) {
+    dd->Remove(6);
+    dd->Remove(-1);
+    ASSERT_EQ(dd->GetLength(), 3);
+    try {
+        dd->Get(6);
+    } catch(const std::exception& oor) {
+        ASSERT_EQ(oor.what(), std::string("bad_optional_access"));
     }
-    std::cout << std::endl;
 }
-TEST_F(SortedSequenceDictionaryTests, SortedSequenceDictionary_Release_1) {
-    int b[] = {-2,-1,1,4,5,6};
-   ASSERT_TRUE(*(ss.GetValues()) == ArraySequence<int>(b, 6));
+
+TEST_F(SortedSequenceDictionaryTests, SortedSequenceDictionary_remove_4) {
+    dd->Remove(5);
+    dd->Remove(-1);
+    ASSERT_EQ(dd->Get(4), 14);
 }
-*/
+TEST_F(SortedSequenceDictionaryTests, SortedSequenceDictionary_IndexOf_tryCatch_1) {
+    try {
+        dd->Get(-2);
+    } catch(const std::exception& oor) {
+        ASSERT_EQ(oor.what(), std::string("bad_optional_access"));
+    }
+}

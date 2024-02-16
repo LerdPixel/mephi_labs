@@ -88,14 +88,23 @@ public:
         return (*elements)[index];
     }
     void InsertAt(T item, size_t index) override {
-        if (index < 0 || index > this->elements->GetLength())
-            throw std::out_of_range("IndexOutOfRange");
         size_t length = this->elements->GetLength();
+        if (index < 0 || index > length)
+            throw std::out_of_range("IndexOutOfRange");
         this->elements->ExpandResize(length + 1);
         for (int i = length; i > index; --i) {
             this->elements->Set(i, this->elements->Get(i-1));
         }
         this->elements->Set(index, item);
+    }
+    void Remove(int index) override {
+        size_t length = this->elements->GetLength();
+        if (index < 0 || index >= length)
+            throw std::out_of_range("IndexOutOfRange");
+        for (int i = index; i < length - 1; ++i) {
+            this->elements->Set(i, this->elements->Get(i+1));
+        }
+        this->elements->ExpandResize(length - 1);
     }
 };
 

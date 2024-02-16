@@ -93,8 +93,11 @@ public:
         }
         return -1;
     }
-    T Get(T element) override {
-        return data->Get(IndexOf(element)); // Sort the list to ensure that it's sorted before getting an element from it.
+    std::optional<T> Get(T element) override {
+        auto index = IndexOf(element);
+        if (index == -1)
+            return {};
+        return data->Get(IndexOf(element));
     }
     shared_ptr<Sequence<T>> GetValues() override {
         Sort();
@@ -113,6 +116,9 @@ public:
     T GetLast() override {
         Sort();
         return data->GetLast();
+    }
+    void Remove(T element) override {
+        data->Remove(IndexOf(element));
     }
     ~SortedSequence() {}
 };

@@ -17,6 +17,7 @@ public:
     virtual void Append(T item) = 0;
     virtual void Prepend(T item) = 0;
     virtual void InsertAt(T item, size_t index) = 0;
+    virtual void Remove(size_t index) = 0;
     template <class T_SEQ>
     Sequence <T>* Concat(Sequence <T> *list) {
         auto e = list->GetEnumerator();
