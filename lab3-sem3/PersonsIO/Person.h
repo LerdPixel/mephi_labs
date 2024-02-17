@@ -14,7 +14,7 @@ struct Person {
     double age;
 };
 
-double GetHeight(Person  person) { return person.height; }
+double GetHeight(Person person) { return person.height; }
 std::string GetName(Person person) { return person.name; }
 std::string GetCountry(Person person) {return person.country; }
 std::string GetGender(Person person) { return person.gender; }

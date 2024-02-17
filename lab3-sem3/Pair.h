@@ -20,4 +20,7 @@ public:
     void SetValue(TValue v) {
         value = v;
     }
+/*     operator ==(const Pair<TKey, TValue>& other) const {
+        return (key == other.GetKey());
+    } */
 };

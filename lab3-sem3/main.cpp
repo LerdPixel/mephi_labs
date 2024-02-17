@@ -29,7 +29,7 @@ void printPerson(Person person) {
 void printPersons(shared_ptr<Sequence<Person>> persons) {
     auto e = persons->GetEnumerator();
     while (e->next())
-        printPerson(*(*e));
+        printPerson(**e);
 }
 shared_ptr<Sequence<Range>> rangesInput() {
     shared_ptr<Sequence<Range>> ranges = shared_ptr<Sequence<Range>>(new ArraySequence<Range>());
@@ -125,7 +125,6 @@ void actions(shared_ptr<Sequence<Person>> seq) {
 void inputPersonData(Person &person) {
     std::cout << "Enter first name: ";
     std::cin >> person.name;
-   // getline(std::cin, person.name);
 
     std::cout << "Enter last name: ";
     std::cin >> person.surname;
@@ -156,7 +155,7 @@ void inputPersonData(Person &person) {
     std::cout << "Enter salary: ";
     std::cin >> person.salary;
 }
-shared_ptr<Sequence<Person>> keybordInput() {
+shared_ptr<Sequence<Person>> keyboardInput() {
     int size;
     std::cout << "Input persons count: ";
     checkInput(&size);
@@ -177,7 +176,7 @@ int main() {
         actions(personsFromFile("person_list_gender_dependent.txt"));
     }
     else {
-        actions(keybordInput());
+        actions(keyboardInput());
     }
    
     return 0;

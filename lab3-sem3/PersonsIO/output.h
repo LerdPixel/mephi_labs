@@ -15,7 +15,7 @@ int checkInput(int *n) {
 	return 0;
 }
 int checkInput(double *n) {
-	double sres = scanf("%lf", n);
+	int sres = scanf("%lf", n);
 	while (sres != 1) {
 		if (sres == EOF)
 			throw std::invalid_argument("End of file");

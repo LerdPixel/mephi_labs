@@ -1,6 +1,7 @@
 #pragma once
 #include "Sequence.h"
-#include "Sorter.h"
+#include "smart_ptrs/shared_ptr.h"
+//#include "Sorter.h"
 
 template <typename T>
 class ISortedSequence {
