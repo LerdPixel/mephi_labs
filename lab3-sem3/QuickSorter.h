@@ -46,7 +46,7 @@ protected:
         quicksort(0, this->_sequence->GetLength()-1);
     }
 public:
-    QuickSorter(bool (*cmp)(T, T), shared_ptr<Sequence<T>> sequence) : Sorter<T>(cmp, sequence) {}
+    QuickSorter(bool (*cmp)(const T&, const T&), shared_ptr<Sequence<T>> sequence) : Sorter<T>(cmp, sequence) {}
 
 };
 

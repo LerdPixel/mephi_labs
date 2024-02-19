@@ -2,49 +2,43 @@
 #include "Sequence.h"
 #include "smart_ptrs/shared_ptr.h"
 #include "baseComparator.h"
-#include "SortedSequence.h"
+#include "ISortedSequence.h"
 #include "SortedSequenceDictionary.h"
 #include "Sequence.h"
-#include "Range.h"
 
 template<typename TKey, typename TObject> 
 class BarChart {
 private:
-    static bool rangeCmp(Range r1, Range r2) { return r1.has(r2); }
-    shared_ptr<SortedSequence<Range>> sortedRanges;
-    shared_ptr<Sequence<Range>> _ranges;
     shared_ptr<IDictionary<TKey, shared_ptr<Sequence<TObject>>>> barChartDict;
-    std::optional<Range> findNumInRanges(double number) {
-        return sortedRanges->Get(Range(number, number));
-    }
-    void rangeDictCreator() { // sortedRanges must already be created
+
+    void adjustedKeysDictCreator(shared_ptr<ISortedSequence<TKey>> adjustedKeys) {
         shared_ptr<Sequence<shared_ptr<Sequence<TObject>>>> seq(new ArraySequence<shared_ptr<Sequence<TObject>>>());   
-        for (int i = 0; i < sortedRanges->GetLength(); ++i) {
+        for (int i = 0; i < adjustedKeys->GetLength(); ++i) {
             seq->Append(shared_ptr<Sequence<TObject>>(new ArraySequence<TObject>()));
         }
-        barChartDict = shared_ptr<IDictionary<Range, shared_ptr<Sequence<TObject>>>>(new SortedSequenceDictionary<Range, shared_ptr<Sequence<TObject>>>(_ranges, seq));
+        barChartDict = shared_ptr<IDictionary<TKey, shared_ptr<Sequence<TObject>>>>(new SortedSequenceDictionary<TKey, shared_ptr<Sequence<TObject>>>(adjustedKeys->GetValues(), seq));
     }
 public:
-    BarChart(shared_ptr<Sequence<TObject>> objects, shared_ptr<Sequence<Range>> ranges, double (*f)(TObject)) : sortedRanges(new SortedSequence<Range>(ranges, baseComparator, BarChart::rangeCmp)), _ranges(ranges) {
-        rangeDictCreator();
+    BarChart(shared_ptr<Sequence<TObject>> objects, TKey (*f)(const TObject&), shared_ptr<ISortedSequence<TKey>> adjustedKeys) {
+        adjustedKeysDictCreator(adjustedKeys);
         auto e = objects->GetEnumerator();
         while (e->next()) {
-            auto range = findNumInRanges(f(*(*e)));
-            if (range) {
-                (*barChartDict)[*range]->Append(*(*e));
+            auto objectKey = adjustedKeys->Get(f(**e));
+            if (objectKey.has_value()) {
+                (*barChartDict)[*objectKey]->Append(**e);
             }
         }
     }
-    BarChart(shared_ptr<Sequence<TObject>> objects, TKey (*f)(TObject)) {
+    BarChart(shared_ptr<Sequence<TObject>> objects, const TKey& (*f)(const TObject&)) {
         barChartDict = shared_ptr<IDictionary<TKey, shared_ptr<Sequence<TObject>>>>(new SortedSequenceDictionary<TKey, shared_ptr<Sequence<TObject>>>());
         auto e = objects->GetEnumerator();
         while (e->next()) {
-            TKey key = (f(*(*e)));
+            TKey key = (f(**e));
             if (barChartDict->ContainsKey(key)) {
-                (*barChartDict)[key]->Append(*(*e));
+                (*barChartDict)[key]->Append(**e);
             } else {
                 auto newSeq = shared_ptr<Sequence<TObject>>(new ArraySequence<TObject>());
-                newSeq->Append( *(*e) );
+                newSeq->Append(**e);
                 barChartDict->Add(key, newSeq);
             }
         }

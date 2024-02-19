@@ -34,4 +34,22 @@ public:
     double GetEnd() const {
         return _end;
     }
+    double& GetStartRef() {
+        return _start;
+    }
+    double& GetEndRef() {
+        return _end;
+    }
+    void SetStart(double start) {
+        _start = start;
+    }
+    void SetEnd(double end) {
+        _end = end;
+    }
+    static bool related(const Range& r1, const Range& r2) {
+        return r1.has(r2) || r2.has(r1);
+    }
+    static bool comparator(const Range& r1, const Range& r2) {
+        return r1 < r2;
+    }
 };

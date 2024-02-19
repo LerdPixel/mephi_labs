@@ -16,8 +16,8 @@ protected:
     shared_ptr<Sorter<T>> fastSort;
     shared_ptr<Sorter<T>> stableSort;
     shared_ptr<Sequence<T>> data;
-    bool (*_cmp)(T, T);
-    bool (*_isEqual)(T, T);
+    bool (*_cmp)(const T&, const T&);
+    bool (*_isEqual)(const T&, const T&);
     bool isSorted;
     size_t notSortedCount = 0;
     void setSorts() {
@@ -36,11 +36,11 @@ protected:
         isSorted = true;
     }
 public:
-    SortedSequence(bool (*cmp)(T, T) = baseComparator, bool(*isEqual)(T, T) = baseEqual) : isSorted(true), notSortedCount(0), _cmp(cmp), _isEqual(isEqual)  {
+    SortedSequence(bool (*cmp)(const T&, const T&) = baseComparator, bool(*isEqual)(const T&, const T&) = baseEqual) : isSorted(true), notSortedCount(0), _cmp(cmp), _isEqual(isEqual)  {
         data = shared_ptr<Sequence<T>>(new ArraySequence<T>());
         setSorts();
     }
-    SortedSequence(const ICollection<T> &collection,  bool (*cmp)(T, T) = baseComparator, bool(*isEqual)(T, T) = baseEqual) : data(new ArraySequence<T>(collection) ), _cmp(cmp), _isEqual(isEqual) {
+    SortedSequence(const ICollection<T> &collection,  bool (*cmp)(const T&, const T&) = baseComparator, bool(*isEqual)(const T&, const T&) = baseEqual) : data(new ArraySequence<T>(collection) ), _cmp(cmp), _isEqual(isEqual) {
         setSorts();
         notSortedCount = collection.GetLength();
         if (notSortedCount > 1) {
@@ -49,7 +49,7 @@ public:
             isSorted = true;
         }
     }
-    SortedSequence(const Sequence<T> *sequence, bool (*cmp)(T, T) = baseComparator, bool(*isEqual)(T, T) = baseEqual) : data(new ArraySequence<T>(sequence)), _cmp(cmp), _isEqual(isEqual) {
+    SortedSequence(const Sequence<T> *sequence, bool (*cmp)(const T&, const T&) = baseComparator, bool(*isEqual)(const T&, const T&) = baseEqual) : data(new ArraySequence<T>(sequence)), _cmp(cmp), _isEqual(isEqual) {
         setSorts();
         notSortedCount = sequence->GetLength();
         if (notSortedCount > 1) {
@@ -58,7 +58,7 @@ public:
             isSorted = true;
         }
     }
-    SortedSequence(shared_ptr<Sequence<T>> sequence, bool (*cmp)(T, T) = baseComparator, bool(*isEqual)(T, T) = baseEqual) : data(new ArraySequence<T>(sequence.get())), _cmp(cmp), _isEqual(isEqual) {
+    SortedSequence(shared_ptr<Sequence<T>> sequence, bool (*cmp)(const T&, const T&) = baseComparator, bool(*isEqual)(const T&, const T&) = baseEqual) : data(new ArraySequence<T>(sequence.get())), _cmp(cmp), _isEqual(isEqual) {
         setSorts();
         notSortedCount = sequence->GetLength();
         if (notSortedCount > 1) {

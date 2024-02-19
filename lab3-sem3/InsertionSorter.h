@@ -17,7 +17,7 @@ protected:
         }
     }
 public:
-    InsertionSorter(bool (*cmp)(T, T), shared_ptr<Sequence<T>> sequence) : Sorter<T>(cmp, sequence) {}
+    InsertionSorter(bool (*cmp)(const T&, const T&), shared_ptr<Sequence<T>> sequence) : Sorter<T>(cmp, sequence) {}
 };
 
 #endif

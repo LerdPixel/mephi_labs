@@ -7,7 +7,7 @@ template <typename T>
 class Sorter {
 protected:
     shared_ptr<Sequence<T>> _sequence;
-    bool (*compare)(T a, T b);
+    bool (*compare)(const T&, const T&);
     void swap(int i, int j) { // sequence indexes
         T tmp = _sequence->Get(i);
         (*_sequence)[i] = _sequence->Get(j);
@@ -15,7 +15,7 @@ protected:
     }
     virtual void _sort() = 0;
 public:
-    Sorter(bool (*cmp)(T, T), shared_ptr<Sequence<T>> sequence) : _sequence(sequence), compare(cmp) {}
+    Sorter(bool (*cmp)(const T&, const T&), shared_ptr<Sequence<T>> sequence) : _sequence(sequence), compare(cmp) {}
     void Sort() {
         _sort();
     }
