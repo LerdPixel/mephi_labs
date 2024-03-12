@@ -5,6 +5,7 @@ cpp
 test
 main
 all_tests_headers.h
+build
 
 # Compiled Object files
 *.slo

@@ -4,10 +4,10 @@
 #include "Pair.h"
 #include "Sequence.h"
 #include "ArraySequence.h"
+#include "IDictionary.h"
 
 template <typename TKey, typename TValue>
-class HashTable
-{
+class HashTable : IDictionary<TKey, TValue> {
 protected:
     typedef std::hash<TKey> Hash;
 	size_t capacity;
@@ -50,11 +50,11 @@ public:
 		container = emptySequence(capacity);
 	}
 	~HashTable() {}
-	size_t GetLength() { return length; }
+	int GetLength() override { return length; }
 
 	size_t GetCapacity() { return capacity; }
 
-	void Add(TKey key, TValue item) {
+	void Add(TKey key, TValue item) override {
 		size_t index = Hash{}(key) % capacity;
 		((*container)[index])->Prepend(Pair<TKey, TValue>(key, item));
 		++length;
@@ -63,24 +63,53 @@ public:
 			Rearrangement();
 		}
 	}
-	TValue& Get(TKey key) {
+	TValue& operator[] (const TKey key) override {
 		size_t index = Hash{}(key) % capacity;
 		size_t chainNumber = ((*container)[index])->findByValue(Pair<TKey, TValue>(key));
 		if (chainNumber == -1)
 			throw std::out_of_range("key not found");
 		return  (*(*container)[index])[chainNumber].GetValueRef();
 	}
-	void Remove(TKey key) {
+	TValue Get(TKey key) override {
 		size_t index = Hash{}(key) % capacity;
 		size_t chainNumber = ((*container)[index])->findByValue(Pair<TKey, TValue>(key));
 		if (chainNumber == -1)
 			throw std::out_of_range("key not found");
-		((*container)[index])->Remove(chainNumber);
+		return  (*(*container)[index])[chainNumber].GetValue();
 	}
-	bool ContainsKey(TKey key)
-	{
+	void Set(TKey key, TValue element) override {
+		size_t index = Hash{}(key) % capacity;
+		size_t chainNumber = ((*container)[index])->findByValue(Pair<TKey, TValue>(key));
+		if (chainNumber == -1)
+			throw std::out_of_range("key not found");
+		(*(*container)[index])[chainNumber].SetValue(element);
+	}
+	void Remove(TKey key) override {
+		size_t index = Hash{}(key) % capacity;
+		size_t chainNumber = ((*container)[index])->findByValue(Pair<TKey, TValue>(key));
+		if (chainNumber == -1)
+			throw std::out_of_range("key not found");
+		--length;
+		((*container)[index])->Remove(chainNumber);
+		if (length * ultimateCapacityCoeff <= capacity) {
+			DecreaseCapacity();
+			Rearrangement();
+		}
+	}
+	bool ContainsKey(TKey key) override {
 		size_t index = Hash{}(key) % capacity;
 		size_t chainNumber = ((*container)[index])->findByValue(Pair<TKey, TValue>(key));
 		return chainNumber != -1;
+	}
+	shared_ptr<Sequence<TKey>> GetKeys() override {
+		shared_ptr<Sequence<TKey>> keysContainer = shared_ptr<Sequence<TKey>>(new ArraySequence<TKey>());
+        auto e = container->GetEnumerator();
+		while(e->next()) {
+			auto eList = (**e)->GetEnumerator();
+			while (eList->next()) {
+				keysContainer->Append((**eList).GetKey());
+			}
+		}
+		return keysContainer;
 	}
 };

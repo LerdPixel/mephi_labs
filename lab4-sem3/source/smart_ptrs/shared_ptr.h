@@ -1,5 +1,7 @@
 #ifndef SHARED_PTR_H
 #define SHARED_PTR_H
+#include <stddef.h>
+#include <utility>
 #include "defaultDeleter.h"
 template <class T, class D>
 class weak_ptr;
