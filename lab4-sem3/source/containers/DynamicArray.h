@@ -99,7 +99,6 @@ shared_ptr<IEnumerator<T>> DynamicArray<T> :: GetEnumerator() {
     return shared_ptr<IEnumerator<T>>(new DynamicArray<T>::ArrayEnumerator(this));
 }
 
-
 template <typename T>
 T DynamicArray<T> :: Get(size_t index) const {
     if (index < 0 || index >= this->length) {

@@ -1,7 +1,7 @@
 #pragma once
 #include <gtest/gtest.h>
-#include "../smart_ptrs/shared_ptr.h"
-#include "../HashTable.h"
+#include "../containers/smart_ptrs/shared_ptr.h"
+#include "../containers/HashTable.h"
 
 struct HashTableTests : public testing::Test {
     shared_ptr<HashTable<int, int>> htp;

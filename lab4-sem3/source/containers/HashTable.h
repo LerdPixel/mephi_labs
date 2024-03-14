@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include "SmartPtrLinkedList.h"
+#include "SmartPtrLinkedListSequence.h"
 #include "Pair.h"
 #include "Sequence.h"
 #include "ArraySequence.h"
@@ -12,6 +13,7 @@ protected:
     typedef std::hash<TKey> Hash;
 	size_t capacity;
 	size_t length;
+	static const size_t DEFAULT_CAPACITY = 8;
 	const size_t expansionCoeff = 2;
 	const size_t ultimateCapacityCoeff = 3;
 	shared_ptr<Sequence<shared_ptr<SmartPtrLinkedList<Pair<TKey, TValue>>>>> container;
@@ -45,7 +47,9 @@ protected:
 		}
 	}
 public:
-	HashTable() = delete;
+	HashTable() : capacity(DEFAULT_CAPACITY), length(0) {
+		container = emptySequence(capacity);
+	}
 	HashTable(size_t capacity) : capacity(capacity), length(0) {
 		container = emptySequence(capacity);
 	}
@@ -101,7 +105,7 @@ public:
 		size_t chainNumber = ((*container)[index])->findByValue(Pair<TKey, TValue>(key));
 		return chainNumber != -1;
 	}
-	shared_ptr<Sequence<TKey>> GetKeys() override {
+	shared_ptr<Sequence<TKey>> GetKeys() const override {
 		shared_ptr<Sequence<TKey>> keysContainer = shared_ptr<Sequence<TKey>>(new ArraySequence<TKey>());
         auto e = container->GetEnumerator();
 		while(e->next()) {
@@ -111,5 +115,16 @@ public:
 			}
 		}
 		return keysContainer;
+	}
+	shared_ptr<Sequence<Pair<TKey, TValue>>> GetPairs() const {
+		shared_ptr<Sequence<Pair<TKey, TValue>>> pairsContainer = shared_ptr<Sequence<Pair<TKey, TValue>>>(new SmartPtrLinkedListSequence<Pair<TKey, TValue>>());
+         auto e = container->GetEnumerator();
+		while(e->next()) {
+			auto eList = (**e)->GetEnumerator();
+			while (eList->next()) {
+				pairsContainer->Prepend((**eList));
+			}
+		}
+		return pairsContainer;
 	}
 };

@@ -1,6 +1,6 @@
 #pragma once
-#include "smart_ptrs/shared_ptr.h"
-#include "ArraySequence.h"
+#include "containers/smart_ptrs/shared_ptr.h"
+#include "containers/ArraySequence.h"
 
 template <typename TEdge>
 class Edges {
@@ -10,5 +10,14 @@ public:
     Edges() : edges(shared_ptr<Sequence<TEdge>>(new ArraySequence<TEdge>())) {}
     Edges(shared_ptr<Sequence<TEdge>> _edges) : edges(_edges) {}
     Edges(const Edges &other) : edges(other.edges) {}
+    void Add(TEdge edge) {
+        edges->Append(edge);
+    }
+    size_t GetLength() const {
+        return edges->GetLength();
+    }
+    shared_ptr<IEnumerator<TEdge>> GetEnumerator() {
+        return edges->GetEnumerator();
+    }
     ~Edges() {}
 };

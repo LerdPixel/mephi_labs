@@ -103,11 +103,11 @@ SmartPtrLinkedList<T> :: SmartPtrLinkedList(const SmartPtrLinkedList <T> &list) 
         //header();
         return;
     }
-    header = make_shared<SmartPtrNode<T>>(*list.header);
+    header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode(*list.header));
     shared_ptr<SmartPtrNode<T>> node = header;
     shared_ptr<SmartPtrNode<T>> listNode = list.header->GetNext();
     while(listNode) {
-        node->SetNext(make_shared<SmartPtrNode<T>>(*listNode));
+        node->SetNext(shared_ptr<SmartPtrNode<T>>(new  SmartPtrNode(*listNode)));
         node = node->GetNext();
         listNode = listNode->GetNext();
     }
@@ -198,19 +198,19 @@ size_t SmartPtrLinkedList<T> :: GetLength() const {
 template <typename T>
 void SmartPtrLinkedList<T> :: Append(T item) {
     if (!header) {
-        header = make_shared<SmartPtrNode<T>>(item);
+        header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode(item));
         return;
     }
     shared_ptr<SmartPtrNode<T>> node = header;
     while (node->GetNext()) {
         node = node->GetNext();
     }
-    node->SetNext(make_shared<SmartPtrNode<T>>(item));
+    node->SetNext(shared_ptr<SmartPtrNode<T>>(new  SmartPtrNode(item)));
 }
 template <typename T>
 void SmartPtrLinkedList<T> :: Prepend(T item) {
     shared_ptr<SmartPtrNode<T>> node = header;
-    header = make_shared<SmartPtrNode<T>>(item, node);
+    header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode<T>(item, node));
 }
 template <typename T>
 void SmartPtrLinkedList<T> :: Set(size_t index, T value) {
@@ -238,11 +238,11 @@ SmartPtrLinkedList<T>* SmartPtrLinkedList<T> :: GetSubList(size_t startIndex, si
         else if (startIndex == endIndex)
             return new SmartPtrLinkedList();
         shared_ptr<SmartPtrNode<T>> node = GetNode(startIndex);
-        shared_ptr<SmartPtrNode<T>> newHeader = make_shared<SmartPtrNode<T>>(*node);
+        shared_ptr<SmartPtrNode<T>> newHeader = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode<T>(*node));
         shared_ptr<SmartPtrNode<T>> newNode = newHeader;
         for (size_t i = startIndex + 1; i < endIndex; ++i) {
             node = node->GetNext();
-            newNode->SetNext(make_shared<SmartPtrNode<T>>(*node));
+            newNode->SetNext(shared_ptr<SmartPtrNode<T>>(new  SmartPtrNode<T>(*node)));
             newNode = newNode->GetNext();
         }
         newNode->SetNext(shared_ptr<SmartPtrNode<T>>());
@@ -267,11 +267,11 @@ void SmartPtrLinkedList<T> :: InsertAt(T item, size_t index) {
     if (index > length || index < 0)
         throw std::out_of_range("IndexOutOfRange");
     if (index == 0 || !header) {
-        header = make_shared<SmartPtrNode<T>>(item, header);
+        header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode(item, header));
     }
     else {
         shared_ptr<SmartPtrNode<T>> stNode = GetNode(index-1);
-        shared_ptr<SmartPtrNode<T>> newNode = make_shared<SmartPtrNode<T>>(item, stNode->GetNext());
+        shared_ptr<SmartPtrNode<T>> newNode = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode(item, stNode->GetNext()));
         stNode->SetNext(newNode);
     }
 }
