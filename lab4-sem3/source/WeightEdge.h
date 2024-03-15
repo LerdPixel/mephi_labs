@@ -10,7 +10,7 @@ public:
     double GetWeight() {
         return weight;
     }
-    TVertex GetDestVertex() {
+    TVertex& GetDestVertex() {
         return destinationVertex;
     }
 };

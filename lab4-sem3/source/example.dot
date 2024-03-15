@@ -1,0 +1,7 @@
+digraph {B
+A
+C
+C -> A[label="4"]
+B -> A[label="3"]
+B -> A[label="52"]
+}

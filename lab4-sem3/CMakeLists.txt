@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION  3.24.1)
 project(my_project)
 
 # GoogleTest requires at least C++14
@@ -15,10 +15,19 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 enable_testing()
 
+
 add_executable(
     my_program.out
     "source/main.cpp"
 )
+
+#set(GRAPHVIZ_DIR "/opt/homebrew/Cellar/graphviz/10.0.1")
+
+#file(GLOB GVC_LIBS "${GRAPHVIZ_DIR}/lib/*.dylib")
+#target_link_libraries(my_program.out ${GVC_LIBS})
+#include_directories("${GRAPHVIZ_DIR}/include")
+
+
 add_executable(
   test.out
   "source/tests/testsHashTable.cpp"

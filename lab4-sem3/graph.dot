@@ -1,0 +1,12 @@
+digraph {
+B
+A
+H
+C
+C -> A[label="4"]
+H -> C[label="8"]
+B -> A[label="3"]
+B -> A[label="2"]
+H->B
+H->B [color="red"]
+}
