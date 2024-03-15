@@ -6,9 +6,16 @@
 #include "containers/SmartPtrLinkedListSequence.h"
 #include <string>
 #include "UI/GraphOutput.h"
+#include "UI/GraphInput.h"
 
 int main() {
-    int  v = 5; // Number of vertices in
+    auto graphPointer = shared_ptr<Graph<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>> >>(new Graph<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>> >()); // Create a new graph
+    GraphOutput out(graphPointer);
+    while(GraphInput(graphPointer)) {
+        out.createDotFile();
+    }
+
+/*     int  v = 5; // Number of vertices in
     ConnectionPoint cp[] = {ConnectionPoint("A"), ConnectionPoint("B"), ConnectionPoint("C")};
     std::string a[] = {"A", "B", "C", "D", "E"};
     auto verts = shared_ptr<Sequence<std::string>>(new ArraySequence<std::string>(a, v));
@@ -24,6 +31,6 @@ int main() {
     graph2->AddEdge(ConnectionPoint("B"), make_shared<WeightEdge<ConnectionPoint>>(ConnectionPoint("A"), 3));
     graph2->AddEdge(ConnectionPoint("B"), make_shared<WeightEdge<ConnectionPoint>>(ConnectionPoint("A"), 2));
 
-    out.createDotFile();
+    out.createDotFile(); */
     return 0;
 }

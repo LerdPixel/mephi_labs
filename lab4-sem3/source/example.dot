@@ -1,7 +1,8 @@
 digraph {B
 A
-C
+S
 C -> A[label="4"]
 B -> A[label="3"]
 B -> A[label="52"]
+B -> S
 }

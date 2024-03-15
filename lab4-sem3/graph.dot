@@ -1,12 +1,15 @@
 digraph {
-B
+b
 A
-H
+G
+D
 C
-C -> A[label="4"]
-H -> C[label="8"]
-B -> A[label="3"]
-B -> A[label="2"]
-H->B
-H->B [color="red"]
+C -> D[label="7"]
+C -> B[label="2"]
+C -> A[label="1"]
+D -> b[label="7"]
+G -> A[label="100"]
+G -> D[label="1.5"]
+A -> B[label="10"]
+b -> B[label="4"]
 }

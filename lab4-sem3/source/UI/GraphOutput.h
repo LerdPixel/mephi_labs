@@ -1,14 +1,12 @@
 #pragma once
 
 #include <string>
-#include <iomanip>
 #include <sstream>
 #include <fstream>
 #include <iostream>
 #include "../IPrintableVertex.h"
 #include "../containers/smart_ptrs/shared_ptr.h"
 #include "../Graph.h"
-
 
 template <typename TVertex, typename TEdge>
 class GraphOutput {
