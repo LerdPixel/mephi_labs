@@ -19,5 +19,17 @@ public:
     shared_ptr<IEnumerator<TEdge>> GetEnumerator() {
         return edges->GetEnumerator();
     }
+    bool Remove(TEdge edge) {
+        auto e = edges->GetEnumerator();
+        int i = 0;
+        while(e->next()) {
+            if (**e == edge) {
+                edges->Remove(i);
+                return true;
+            }
+            ++i;
+        }
+        return false;
+    }
     ~Edges() {}
 };

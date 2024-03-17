@@ -33,7 +33,7 @@ public:
     std::string printEdges();
     std::string printVertices();
     void print();
-    void createDotFile(const std::string filename = "./graph.dot");
+    virtual void createDotFile(const std::string filename = "./graph.dot");
 };
 template <typename TVertex, typename TEdge> 
 GraphOutput<TVertex, TEdge> :: GraphOutput(const shared_ptr<Graph<TVertex, TEdge>> graph_) { graph = graph_; }

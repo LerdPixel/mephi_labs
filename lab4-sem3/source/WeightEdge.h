@@ -2,6 +2,7 @@
 
 template <typename TVertex> 
 class WeightEdge {
+protected:
     TVertex destinationVertex;
     double weight;
 public:
@@ -12,5 +13,8 @@ public:
     }
     TVertex& GetDestVertex() {
         return destinationVertex;
+    }
+    bool operator==(const WeightEdge<TVertex>& edge) {
+        return destinationVertex == edge.destinationVertex && weight == edge.weight;
     }
 };
