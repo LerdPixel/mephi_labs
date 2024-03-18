@@ -9,7 +9,6 @@
 #include "InsertionSorter.h"
 #include "smart_ptrs/sharedFromT.h"
 #include "smartPtrPairComparator.h"
-#define NOT_SORTED_GAP 10
 
 
 template <typename T>
@@ -22,6 +21,7 @@ protected:
     bool (*_isEqual)(shared_ptr<T>, shared_ptr<T>);
     bool isSorted;
     size_t notSortedCount = 0;
+    static const size_t NOT_SORTED_GAP = 10;
     void setSorts() {
         fastSort = std::move(shared_ptr<Sorter<shared_ptr<T>>>(new QuickSorter<shared_ptr<T>>(_cmp, data)));
         stableSort = std::move(shared_ptr<Sorter<shared_ptr<T>>>(new InsertionSorter<shared_ptr<T>>(_cmp, data)));

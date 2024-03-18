@@ -7,7 +7,7 @@
 bool GraphInput(shared_ptr<Graph<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>>>> graphPointer) {
     std::string input, vertex1, vertex2;
     double weight;
-    std::cout << "Enter strings (word1 word2 number), press Enter for each. Enter an empty string to stop." << std::endl;
+    std::cout << "Enter edges (word1 word2 number), press Enter for each. Enter an empty string to stop." << std::endl;
     std::getline(std::cin, input);
     if (input.empty())     // Check if input is empty, if so, return false
         return false;

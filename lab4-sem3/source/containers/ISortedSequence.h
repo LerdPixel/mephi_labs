@@ -1,4 +1,5 @@
 #pragma once
+#include <optional>
 #include "Sequence.h"
 #include "smart_ptrs/shared_ptr.h"
 //#include "Sorter.h"

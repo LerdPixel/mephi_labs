@@ -39,3 +39,19 @@ TEST_F(GraphTests, GraphTests_Delete_Edge_1) {
     ASSERT_TRUE(graph->ContainsVertex("H"));    
     ASSERT_EQ(graph->GetVertices()->GetLength(), 7);
 }
+TEST_F(GraphTests, GraphTests_CopyConstructor) {
+    graph->AddEdge("H", make_shared<WeightEdge<std::string>>("G", 8));
+    shared_ptr<Graph<std::string, shared_ptr<WeightEdge<std::string>> >> graph2(new Graph<std::string, shared_ptr<WeightEdge<std::string>>>(*graph));
+    ASSERT_TRUE(graph2->ContainsVertex("G"));
+    ASSERT_TRUE(graph2->ContainsVertex("H"));
+    ASSERT_EQ(graph->GetVertices()->GetLength(), 7);
+}
+TEST_F(GraphTests, GraphTests_CopyConstructor_2) {
+    shared_ptr<Graph<std::string, shared_ptr<WeightEdge<std::string>> >> graph2(new Graph<std::string, shared_ptr<WeightEdge<std::string>>>(*graph));
+    graph2->AddEdge("H", make_shared<WeightEdge<std::string>>("G", 8));
+    ASSERT_FALSE(graph->ContainsVertex("G"));
+    ASSERT_FALSE(graph->ContainsVertex("H"));
+    graph->AddVertex("X");
+    graph->AddEdge("X", make_shared<WeightEdge<std::string>>("A", 8));
+    ASSERT_FALSE(graph2->ContainsVertex("X"));
+}

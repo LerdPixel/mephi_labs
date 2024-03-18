@@ -1,5 +1,7 @@
 digraph {
 A
 B
+C
+B -> C[label="12"]
 A -> B[label="10"]
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "containers/smart_ptrs/shared_ptr.h"
-//#include "containers/ArraySequence.h"
 #include "containers/HashTable.h"
 #include "Edges.h"
 #include "Path.h"
@@ -12,8 +11,8 @@ protected:
 public:
     Graph() : dictionary(10) {}
     Graph(shared_ptr<Sequence<TVertex>> vertices);
-    Graph(const Graph&) = delete; // Copy constructor
-    void operator=(Graph const &) = delete; // Assignment operator
+    Graph(const Graph& other); // Copy constructor
+    //void operator=(Graph const &) = delete; // Assignment operator
     ~Graph() {}    // Destruct
     bool ContainsVertex(TVertex vertex);
     void AddEdge(TVertex vertex, TEdge edge);
@@ -21,15 +20,20 @@ public:
     bool DeleteEdge(TVertex vertex, TEdge edge);
     shared_ptr<Sequence<TVertex>> GetVertices() const;
     shared_ptr<Sequence<Pair<TVertex, Edges<TEdge>>>> GetEdgesAndVertices() const;
-    Path<TVertex, TEdge> ShortestPath(TVertex startVertex, TVertex finishVertex) const {
-        
-    }
 };
 template <typename TVertex, typename TEdge>
 Graph<TVertex, TEdge> :: Graph(shared_ptr<Sequence<TVertex>> vertices) {
     auto e = vertices->GetEnumerator();
     while (e->next()) {
         dictionary.Add(**e, Edges<TEdge>());
+    }
+}
+template <typename TVertex, typename TEdge>
+Graph<TVertex, TEdge> :: Graph(const Graph& other) {
+    auto pairs = other.GetEdgesAndVertices();
+    auto e = pairs->GetEnumerator();
+    while (e->next()) {
+        dictionary.Add((**e).GetKey(), (**e).GetValue());
     }
 }
 template <typename TVertex, typename TEdge>

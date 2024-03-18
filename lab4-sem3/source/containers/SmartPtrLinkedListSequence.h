@@ -72,7 +72,10 @@ public:
         elements->InsertAt(item, index);
     }
     void Remove(size_t index) override {
-        
+        elements->Remove(index);
+    }
+    size_t findByValue(T item) {
+        return elements->findByValue(item);
     }
 };
 

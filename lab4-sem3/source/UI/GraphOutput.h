@@ -7,6 +7,7 @@
 #include "../IPrintableVertex.h"
 #include "../containers/smart_ptrs/shared_ptr.h"
 #include "../Graph.h"
+#include "../Path.h"
 
 template <typename TVertex, typename TEdge>
 class GraphOutput {
@@ -73,4 +74,17 @@ void GraphOutput<TVertex, TEdge> :: createDotFile(const std::string filename) {
     outfile << "digraph {" << std::endl;
     outfile << printVertices() << printEdges() << "}\n";
     outfile.close();
+}
+
+template <typename TVertex, typename TEdge>
+void PrintPath(Path<TVertex, TEdge> path) {
+    if(path.GetLength() == -1) {
+        std::cout << "There is no path\n";
+    }
+    std::cout << path.GetFirst().PrintableOutput();
+    auto e = path.GetEnumerator();
+    while(e->next()) {
+        std::cout << " -- " << (**e)->GetWeight() << " --> " << (**e)->GetDestVertex().PrintableOutput();
+    }
+    std::cout << "\n";   
 }

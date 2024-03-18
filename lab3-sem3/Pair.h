@@ -20,6 +20,9 @@ public:
     void SetValue(TValue v) {
         value = v;
     }
+    void SetKey(TKey k) {
+        key = k;
+    }
     bool operator ==(const Pair<TKey, TValue>& other) const {
         return (key == other.GetKey());
     }

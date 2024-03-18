@@ -103,11 +103,11 @@ SmartPtrLinkedList<T> :: SmartPtrLinkedList(const SmartPtrLinkedList <T> &list) 
         //header();
         return;
     }
-    header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode(*list.header));
+    header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode<T>(*list.header));
     shared_ptr<SmartPtrNode<T>> node = header;
     shared_ptr<SmartPtrNode<T>> listNode = list.header->GetNext();
     while(listNode) {
-        node->SetNext(shared_ptr<SmartPtrNode<T>>(new  SmartPtrNode(*listNode)));
+        node->SetNext(shared_ptr<SmartPtrNode<T>>(new  SmartPtrNode<T>(*listNode)));
         node = node->GetNext();
         listNode = listNode->GetNext();
     }
@@ -198,14 +198,14 @@ size_t SmartPtrLinkedList<T> :: GetLength() const {
 template <typename T>
 void SmartPtrLinkedList<T> :: Append(T item) {
     if (!header) {
-        header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode(item));
+        header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode<T>(item));
         return;
     }
     shared_ptr<SmartPtrNode<T>> node = header;
     while (node->GetNext()) {
         node = node->GetNext();
     }
-    node->SetNext(shared_ptr<SmartPtrNode<T>>(new  SmartPtrNode(item)));
+    node->SetNext(shared_ptr<SmartPtrNode<T>>(new  SmartPtrNode<T>(item)));
 }
 template <typename T>
 void SmartPtrLinkedList<T> :: Prepend(T item) {
@@ -267,11 +267,11 @@ void SmartPtrLinkedList<T> :: InsertAt(T item, size_t index) {
     if (index > length || index < 0)
         throw std::out_of_range("IndexOutOfRange");
     if (index == 0 || !header) {
-        header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode(item, header));
+        header = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode<T>(item, header));
     }
     else {
         shared_ptr<SmartPtrNode<T>> stNode = GetNode(index-1);
-        shared_ptr<SmartPtrNode<T>> newNode = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode(item, stNode->GetNext()));
+        shared_ptr<SmartPtrNode<T>> newNode = shared_ptr<SmartPtrNode<T>>(new SmartPtrNode<T>(item, stNode->GetNext()));
         stNode->SetNext(newNode);
     }
 }
