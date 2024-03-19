@@ -1,5 +1,10 @@
 digraph {
 A
 B
-A -> B[label="10"]
+F
+D
+D -> A[label="7"]
+F -> B[label="3"]
+F -> D[label="1"]
+B -> A[label="10"]
 }

@@ -80,6 +80,7 @@ template <typename TVertex, typename TEdge>
 void PrintPath(Path<TVertex, TEdge> path) {
     if(path.GetLength() == -1) {
         std::cout << "There is no path\n";
+        return;
     }
     std::cout << path.GetFirst().PrintableOutput();
     auto e = path.GetEnumerator();

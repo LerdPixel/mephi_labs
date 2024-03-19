@@ -32,7 +32,7 @@ public:
 
         auto e = vertices->GetEnumerator();
         while (e->next()) {
-            table.Add(**e, Pair<double, Pair<TVertex, TEdge>>(std::numeric_limits<double>::max()));
+            table.Add(**e, Pair<double, Pair<TVertex, TEdge>>(std::numeric_limits<double>::max()-1));
         }
 
         table[startVertex].SetKey(0); // set first vertex
@@ -61,17 +61,18 @@ public:
                     }
                 }
             }
-            std::cout << unvisited->GetLength() << '\n';            
+            //std::cout << unvisited->GetLength() << '\n';            
             visited->Append(minVert);
-            std::cout << "minIndex" << minIndex << "\n";
+            //std::cout << "minIndex" << minIndex << "\n";
             unvisited->Remove(minIndex);
         }
         // finding path
         TVertex LastVertex = finishVertex;
         Path<TVertex, TEdge> path(startVertex);
-        if (table[LastVertex].GetKey() > std::numeric_limits<double>::max() - 1000) {
+        if (table[LastVertex].GetKey() >= std::numeric_limits<double>::max() - 1000) {
             return Path<TVertex, TEdge>();
         }
+        //std::cout << table[LastVertex].GetKey() << "\n" << std::numeric_limits<double>::max() - 1000 << "\n"; 
         while(true) {
             path.Prepend(table[LastVertex].GetValue().GetValue());
             LastVertex = table[LastVertex].GetValue().GetKey();
@@ -80,4 +81,44 @@ public:
         }
         return path;
     }
+    IDictionary<TVertex, int>* Color() {
+		IDictionary<TVertex, int>* coloredVertices = HashTable<TVertex, int>(this->dictionary.GetCapacity());
+		std::vector<bool> usedColors;
+
+		for (std::size_t i = 0; i < vertices.size(); i++)
+		{
+			usedColors.push_back(false);
+		}
+
+		for (std::size_t j = 0; j < vertices.size(); j++)
+		{
+			TVertex currentVertex = vertices[j];
+			std::vector<Edge>adjVertices = container->Get(currentVertex);
+			for (std::size_t i = 0; i < adjVertices.size(); i++)
+			{
+				if (coloredVertices->ContainsKey(adjVertices[i].second()))
+					usedColors[coloredVertices->Get(adjVertices[i].second())] = true;
+			}
+
+			int currentColor = 0;
+
+			for (std::size_t i = 0; i < usedColors.size(); i++)
+			{
+				if (!usedColors[i])
+				{
+					currentColor = i;
+					break;
+				}
+			}
+
+			coloredVertices->Add(currentVertex, currentColor);
+
+			for (std::size_t i = 0; i < vertices.size(); i++)
+			{
+				usedColors[i] = false;
+			}
+		}
+
+		return coloredVertices;
+	}
 };

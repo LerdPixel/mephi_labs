@@ -1,6 +1,7 @@
 #pragma once
 #include "containers/smart_ptrs/shared_ptr.h"
 #include "containers/HashTable.h"
+#include "VertexTable.h"
 #include "Edges.h"
 #include "Path.h"
 
@@ -18,6 +19,7 @@ public:
     void AddEdge(TVertex vertex, TEdge edge);
     void AddVertex(TVertex vertex);
     bool DeleteEdge(TVertex vertex, TEdge edge);
+    VertexTable<double> GetAdjacencyTable();
     shared_ptr<Sequence<TVertex>> GetVertices() const;
     shared_ptr<Sequence<Pair<TVertex, Edges<TEdge>>>> GetEdgesAndVertices() const;
 };
@@ -60,6 +62,8 @@ bool Graph<TVertex, TEdge> :: DeleteEdge(TVertex vertex, TEdge edge) {
     }
     return false;
 }
+
+VertexTable<double> GetAdjacencyTable();
 
 template <typename TVertex, typename TEdge>
 shared_ptr<Sequence<TVertex>> Graph<TVertex, TEdge> :: GetVertices() const {

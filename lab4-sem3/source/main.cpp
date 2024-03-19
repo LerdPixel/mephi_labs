@@ -9,12 +9,26 @@
 #include "UI/GraphInput.h"
 #include "GraphAlgorithms.h"
 
-int main() {
-    auto graphPointer = shared_ptr<Graph<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>> >>(new Graph<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>> >()); // Create a new graph
-    GraphOutput out(graphPointer);
+void EdgeInput(shared_ptr<Graph<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>>>> graphPointer, GraphOutput<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>>>& out) {
     while(GraphInput(graphPointer)) {
         out.createDotFile();
     }
+}
+
+
+int main() {
+    auto graphPointer = shared_ptr<Graph<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>> >>(new Graph<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>> >()); // Create a new graph
+    GraphOutput out(graphPointer);
+    switch (expression)
+    {
+    case /* constant-expression */:
+        /* code */
+        break;
+    
+    default:
+        break;
+    }
+    EdgeInput(graphPointer, out);
     GraphAlgorithms<ConnectionPoint, shared_ptr<WeightEdge<ConnectionPoint>>>  algo(*graphPointer);
     while (true) {
         std::string input, vertex1, vertex2;
