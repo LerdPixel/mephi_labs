@@ -9,10 +9,10 @@
 #include "../Graph.h"
 #include "../Path.h"
 
-template <typename TVertex, typename TEdge>
+template <typename TVertex>
 class GraphOutput {
 private:
-    shared_ptr<Graph<TVertex, TEdge>> graph;
+    shared_ptr<Graph<TVertex, double>> graph;
     inline static const std::string bond = " -> ";
     inline const std::string VertexName(IPrintableVertex& printableVertex) {
         return  printableVertex.GetName();
@@ -26,22 +26,22 @@ private:
         str.erase( str.find_last_not_of('.') + 1, std::string::npos );
         return std::move(str);
     }
-    inline std::string EdgePrinting(TVertex vertex, TEdge edge) {
-        return std::move( VertexName(vertex) + bond + VertexName(edge->GetDestVertex()) + "[label=\"" + doubleToString(edge->GetWeight()) + "\"]" );
+    inline std::string EdgePrinting(TVertex vertex1, TVertex vertex2, double weight) {
+        return std::move( VertexName(vertex1) + bond + VertexName(vertex2) + "[label=\"" + doubleToString(weight) + "\"]" );
     }
 public:
-    GraphOutput(const shared_ptr<Graph<TVertex, TEdge>> graph_);
+    GraphOutput(const shared_ptr<Graph<TVertex, double>> graph_);
     std::string printEdges();
     std::string printVertices();
     void print();
     virtual void createDotFile(const std::string filename = "./graph.dot");
 };
-template <typename TVertex, typename TEdge> 
-GraphOutput<TVertex, TEdge> :: GraphOutput(const shared_ptr<Graph<TVertex, TEdge>> graph_) { graph = graph_; }
+template <typename TVertex> 
+GraphOutput<TVertex>  :: GraphOutput(const shared_ptr<Graph<TVertex, double>> graph_) { graph = graph_; }
 
 
-template <typename TVertex, typename TEdge> 
-std::string GraphOutput<TVertex, TEdge> :: printVertices() {
+template <typename TVertex> 
+std::string GraphOutput<TVertex>  :: printVertices() {
     std::string verticesString = "";
     auto vertices = graph->GetVertices();
     auto e = vertices->GetEnumerator();
@@ -50,25 +50,25 @@ std::string GraphOutput<TVertex, TEdge> :: printVertices() {
     }
     return std::move(verticesString);
 }
-template <typename TVertex, typename TEdge> 
-std::string GraphOutput<TVertex, TEdge> :: printEdges() {
+template <typename TVertex> 
+std::string GraphOutput<TVertex>  :: printEdges() {
     std::string edgesString = "";
     auto pairs = graph->GetEdgesAndVertices();
     auto en = pairs->GetEnumerator();
     while(en->next()) {
         auto edgesEn = ((**en).GetValue()).GetEnumerator();
         while (edgesEn->next()) {
-            edgesString.append(EdgePrinting((**en).GetKey(), **edgesEn) + '\n');
+            edgesString.append(EdgePrinting((**en).GetKey(), (**edgesEn).GetDestVertex(), (**edgesEn).GetWeight()) + '\n');
         }
     }
     return std::move(edgesString);
 }
-template <typename TVertex, typename TEdge> 
-void GraphOutput<TVertex, TEdge> :: print() {
+template <typename TVertex> 
+void GraphOutput<TVertex>  :: print() {
     std::cout << printVertices() << printEdges();
 }
-template <typename TVertex, typename TEdge> 
-void GraphOutput<TVertex, TEdge> :: createDotFile(const std::string filename) {
+template <typename TVertex> 
+void GraphOutput<TVertex>  :: createDotFile(const std::string filename) {
     std::ofstream outfile;
     outfile.open(filename);
     outfile << "digraph {" << std::endl;
@@ -76,8 +76,8 @@ void GraphOutput<TVertex, TEdge> :: createDotFile(const std::string filename) {
     outfile.close();
 }
 
-template <typename TVertex, typename TEdge>
-void PrintPath(Path<TVertex, TEdge> path) {
+template <typename TVertex>
+void PrintPath(Path<TVertex, double> path) {
     if(path.GetLength() == -1) {
         std::cout << "There is no path\n";
         return;
@@ -85,7 +85,7 @@ void PrintPath(Path<TVertex, TEdge> path) {
     std::cout << path.GetFirst().PrintableOutput();
     auto e = path.GetEnumerator();
     while(e->next()) {
-        std::cout << " -- " << (**e)->GetWeight() << " --> " << (**e)->GetDestVertex().PrintableOutput();
+        std::cout << " -- " << (**e).GetWeight() << " --> " << (**e).GetDestVertex().PrintableOutput();
     }
     std::cout << "\n";   
 }

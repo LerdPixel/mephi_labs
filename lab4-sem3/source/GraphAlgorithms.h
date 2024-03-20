@@ -12,37 +12,37 @@
 #include "VertexComparators.h"
 
 
-template <typename TVertex, typename TEdge>
-class GraphAlgorithms : public Graph<TVertex, TEdge> {
+template <typename TVertex, typename TWeight>
+class GraphAlgorithms : public Graph<TVertex, TWeight> {
 public:
-    GraphAlgorithms() : Graph<TVertex, TEdge>() {}
-    GraphAlgorithms(shared_ptr<Sequence<TVertex>> vertices) : Graph<TVertex, TEdge>(vertices) {}
-    GraphAlgorithms(const Graph<TVertex, TEdge>& graph) : Graph<TVertex, TEdge>(graph) {}
-    void operator=(Graph<TVertex, TEdge> const &) = delete; // Assignment operator
+    GraphAlgorithms() : Graph<TVertex, TWeight>() {}
+    GraphAlgorithms(shared_ptr<Sequence<TVertex>> vertices) : Graph<TVertex, TWeight>(vertices) {}
+    GraphAlgorithms(const Graph<TVertex, TWeight>& graph) : Graph<TVertex, TWeight>(graph) {}
+    void operator=(Graph<TVertex, TWeight> const &) = delete; // Assignment operator
     ~GraphAlgorithms() {}
-    Path<TVertex, TEdge> Dijkstra(TVertex startVertex, TVertex finishVertex) {
+    Path<TVertex, TWeight> Dijkstra(TVertex startVertex, TVertex finishVertex) {
         if ( !(this->ContainsVertex(startVertex) && this->ContainsVertex(finishVertex))) 
-            return Path<TVertex, TEdge>();
+            return Path<TVertex, TWeight>();
         if (startVertex == finishVertex)
-            return Path<TVertex, TEdge>(startVertex);
+            return Path<TVertex, TWeight>(startVertex);
         auto vertices = this->GetVertices();
         auto unvisited = shared_ptr<SmartPtrLinkedListSequence<TVertex>>(new SmartPtrLinkedListSequence<TVertex>(vertices.get()));
         auto visited = shared_ptr<SmartPtrLinkedListSequence<TVertex>>(new SmartPtrLinkedListSequence<TVertex>());
-        HashTable<TVertex, Pair<double, Pair<TVertex, TEdge>>> table(this->dictionary.GetCapacity());
+        HashTable<TVertex, Pair<TWeight, Pair<TVertex, WeightEdge<TVertex, TWeight>>>> table(this->dictionary.GetCapacity());
 
         auto e = vertices->GetEnumerator();
         while (e->next()) {
-            table.Add(**e, Pair<double, Pair<TVertex, TEdge>>(std::numeric_limits<double>::max()-1));
+            table.Add(**e, Pair<TWeight, Pair<TVertex, WeightEdge<TVertex, TWeight>>>(std::numeric_limits<TWeight>::max()-1));
         }
 
         table[startVertex].SetKey(0); // set first vertex
         while(unvisited->GetLength() > 0) { // while unvisited vertecies left
             auto u = unvisited->GetEnumerator(); 
-            double min = std::numeric_limits<double>::max();
+            TWeight min = std::numeric_limits<TWeight>::max();
             TVertex minVert; // min unvisited
             int index = 0, minIndex = 0;
             while(u->next()) {
-                double pathLen = table[**u].GetKey();
+                TWeight pathLen = table[**u].GetKey();
                 if (pathLen <= min) {
                     min = pathLen;
                     minVert = **u;
@@ -51,13 +51,13 @@ public:
                 ++index;
             }
 
-            auto dIter = this->dictionary[minVert].GetEnumerator(); // minVert's neighbour vertecies
+            auto dIter = this->dictionary[minVert].GetKey().GetEnumerator(); // minVert's neighbour vertecies
             while(dIter->next()) {
-                int index = unvisited->findByValue((**dIter)->GetDestVertex());
-                if (unvisited->findByValue((**dIter)->GetDestVertex()) != -1) { // if unvisited
-                    double newLength = min + (**dIter)->GetWeight();
-                    if (newLength < table[(**dIter)->GetDestVertex()].GetKey()) {
-                        table[(**dIter)->GetDestVertex()] = Pair<double, Pair<TVertex, TEdge>>(newLength, Pair<TVertex, TEdge>(minVert, **dIter));
+                int index = unvisited->findByValue((**dIter).GetDestVertex());
+                if (unvisited->findByValue((**dIter).GetDestVertex()) != -1) { // if unvisited
+                    TWeight newLength = min + (**dIter).GetWeight();
+                    if (newLength < table[(**dIter).GetDestVertex()].GetKey()) {
+                        table[(**dIter).GetDestVertex()] = Pair<TWeight, Pair<TVertex, WeightEdge<TVertex, TWeight>>>(newLength, Pair<TVertex, WeightEdge<TVertex, TWeight>>(minVert, **dIter));
                     }
                 }
             }
@@ -68,11 +68,10 @@ public:
         }
         // finding path
         TVertex LastVertex = finishVertex;
-        Path<TVertex, TEdge> path(startVertex);
-        if (table[LastVertex].GetKey() >= std::numeric_limits<double>::max() - 1000) {
-            return Path<TVertex, TEdge>();
+        Path<TVertex, TWeight> path(startVertex);
+        if (table[LastVertex].GetKey() >= std::numeric_limits<TWeight>::max() - 1000) {
+            return Path<TVertex, TWeight>();
         }
-        //std::cout << table[LastVertex].GetKey() << "\n" << std::numeric_limits<double>::max() - 1000 << "\n"; 
         while(true) {
             path.Prepend(table[LastVertex].GetValue().GetValue());
             LastVertex = table[LastVertex].GetValue().GetKey();
@@ -81,7 +80,7 @@ public:
         }
         return path;
     }
-    IDictionary<TVertex, int>* Color() {
+ /*    IDictionary<TVertex, int>* Color() {
 		IDictionary<TVertex, int>* coloredVertices = HashTable<TVertex, int>(this->dictionary.GetCapacity());
 		std::vector<bool> usedColors;
 
@@ -120,5 +119,5 @@ public:
 		}
 
 		return coloredVertices;
-	}
+	} */
 };

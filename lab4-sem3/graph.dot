@@ -1,10 +1,14 @@
 digraph {
+V
 A
-B
 F
-D
-D -> A[label="7"]
-F -> B[label="3"]
-F -> D[label="1"]
-B -> A[label="10"]
+H
+Y
+C
+V -> H[label="10"]
+A -> C[label="10"]
+A -> F[label="5"]
+F -> Y[label="1.5"]
+Y -> H[label="5"]
+C -> V[label="7"]
 }

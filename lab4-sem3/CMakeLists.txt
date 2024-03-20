@@ -30,7 +30,7 @@ add_executable(
 
 add_executable(
   test.out
-  "source/tests/testsHashTable.cpp"
+  "source/tests/tests.cpp"
 )
 target_link_libraries(
     test.out

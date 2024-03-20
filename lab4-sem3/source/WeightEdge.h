@@ -1,20 +1,20 @@
 #pragma once
 
-template <typename TVertex> 
+template <typename TVertex, typename TWeight> 
 class WeightEdge {
 protected:
     TVertex destinationVertex;
-    double weight;
+    TWeight weight;
 public:
-    WeightEdge(TVertex _destinationVertex) : destinationVertex(_destinationVertex), weight(1) {}
-    WeightEdge(TVertex _destinationVertex, double _weight) : destinationVertex(_destinationVertex), weight(_weight) {}
-    double GetWeight() {
+    WeightEdge() {}
+    WeightEdge(TVertex _destinationVertex, TWeight _weight) : destinationVertex(_destinationVertex), weight(_weight) {}
+    TWeight GetWeight() {
         return weight;
     }
     TVertex& GetDestVertex() {
         return destinationVertex;
     }
-    bool operator==(const WeightEdge<TVertex>& edge) {
+    bool operator==(const WeightEdge<TVertex, TWeight>& edge) {
         return destinationVertex == edge.destinationVertex && weight == edge.weight;
     }
 };

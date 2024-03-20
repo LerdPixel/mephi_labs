@@ -1,25 +1,26 @@
 #pragma once
 #include "containers/smart_ptrs/shared_ptr.h"
 #include "containers/ArraySequence.h"
+#include "WeightEdge.h"
 
-template <typename TEdge>
+template <typename TVertex, typename TWeight>
 class Edges {
 public:
-    shared_ptr<Sequence<TEdge>> edges;
+    shared_ptr<Sequence<WeightEdge<TVertex, TWeight>>> edges;
     // Constructors
-    Edges() : edges(shared_ptr<Sequence<TEdge>>(new ArraySequence<TEdge>())) {}
-    Edges(shared_ptr<Sequence<TEdge>> _edges) : edges(_edges) {}
+    Edges() : edges(shared_ptr<Sequence<WeightEdge<TVertex, TWeight>>>(new ArraySequence<WeightEdge<TVertex, TWeight>>())) {}
+    Edges(shared_ptr<Sequence<WeightEdge<TVertex, TWeight>>> _edges) : edges(_edges) {}
     Edges(const Edges &other) : edges(other.edges) {}
-    void Add(TEdge edge) {
+    void Add(WeightEdge<TVertex, TWeight> edge) {
         edges->Append(edge);
     }
     size_t GetLength() const {
         return edges->GetLength();
     }
-    shared_ptr<IEnumerator<TEdge>> GetEnumerator() {
+    shared_ptr<IEnumerator<WeightEdge<TVertex, TWeight>>> GetEnumerator() {
         return edges->GetEnumerator();
     }
-    bool Remove(TEdge edge) {
+    bool Remove(WeightEdge<TVertex, TWeight> edge) {
         auto e = edges->GetEnumerator();
         int i = 0;
         while(e->next()) {
