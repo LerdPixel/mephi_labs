@@ -15,11 +15,9 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 enable_testing()
 
+set(SOURCE_FILES source/main.cpp source/UI/IntInput.cpp source/UI/WordInput.cpp)
 
-add_executable(
-    my_program.out
-    "source/main.cpp"
-)
+add_executable(my_program.out ${SOURCE_FILES})
 
 #set(GRAPHVIZ_DIR "/opt/homebrew/Cellar/graphviz/10.0.1")
 

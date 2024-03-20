@@ -8,7 +8,7 @@
 #include "IDictionary.h"
 
 template <typename TKey, typename TValue>
-class HashTable : IDictionary<TKey, TValue> {
+class HashTable : public IDictionary<TKey, TValue> {
 protected:
     typedef std::hash<TKey> Hash;
 	size_t capacity;

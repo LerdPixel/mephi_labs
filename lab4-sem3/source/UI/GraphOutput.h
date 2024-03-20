@@ -4,7 +4,9 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <vector>
 #include "../IPrintableVertex.h"
+#include "../additional/Colors.h"
 #include "../containers/smart_ptrs/shared_ptr.h"
 #include "../Graph.h"
 #include "../Path.h"
@@ -17,9 +19,10 @@ private:
     inline const std::string VertexName(IPrintableVertex& printableVertex) {
         return  printableVertex.GetName();
     }
-    inline const std::string VertexPrinting(IPrintableVertex& printableVertex) {
-        return printableVertex.PrintableOutput();
+    inline std::string VertexPrinting(IPrintableVertex& printableVertex) {
+        return std::move(printableVertex.PrintableOutput());
     }
+    std::string VertexColoredPrinting(shared_ptr<IDictionary<TVertex, int>> colors);
     inline std::string doubleToString(double number) {
         std::string str = std::to_string(number);
         str.erase( str.find_last_not_of('0') + 1, std::string::npos );
@@ -33,15 +36,17 @@ public:
     GraphOutput(const shared_ptr<Graph<TVertex, double>> graph_);
     std::string printEdges();
     std::string printVertices();
+    std::string printColoredVertices(std::string printVertices());
     void print();
     virtual void createDotFile(const std::string filename = "./graph.dot");
+    void createColoredDotFile(shared_ptr<IDictionary<TVertex, int>> colors, const std::string filename = "./graph.dot");
 };
 template <typename TVertex> 
 GraphOutput<TVertex>  :: GraphOutput(const shared_ptr<Graph<TVertex, double>> graph_) { graph = graph_; }
 
 
 template <typename TVertex> 
-std::string GraphOutput<TVertex>  :: printVertices() {
+std::string GraphOutput<TVertex> :: printVertices() {
     std::string verticesString = "";
     auto vertices = graph->GetVertices();
     auto e = vertices->GetEnumerator();
@@ -50,8 +55,19 @@ std::string GraphOutput<TVertex>  :: printVertices() {
     }
     return std::move(verticesString);
 }
-template <typename TVertex> 
-std::string GraphOutput<TVertex>  :: printEdges() {
+template <typename TVertex>
+std::string GraphOutput<TVertex> :: VertexColoredPrinting(shared_ptr<IDictionary<TVertex, int>> colorsNums) {
+    std::string verticesString = "";
+    auto vertices = graph->GetVertices();
+    auto e = vertices->GetEnumerator();
+    while(e->next()) {
+        verticesString.append(VertexPrinting(**e) + " [color=" + colors[colorsNums->Get(**e)] + "]\n");
+    }
+    return std::move(verticesString);
+}
+
+template <typename TVertex>
+std::string GraphOutput<TVertex> :: printEdges() {
     std::string edgesString = "";
     auto pairs = graph->GetEdgesAndVertices();
     auto en = pairs->GetEnumerator();
@@ -64,11 +80,19 @@ std::string GraphOutput<TVertex>  :: printEdges() {
     return std::move(edgesString);
 }
 template <typename TVertex> 
-void GraphOutput<TVertex>  :: print() {
+void GraphOutput<TVertex> :: print() {
     std::cout << printVertices() << printEdges();
 }
 template <typename TVertex> 
-void GraphOutput<TVertex>  :: createDotFile(const std::string filename) {
+void GraphOutput<TVertex> :: createColoredDotFile(shared_ptr<IDictionary<TVertex, int>> colors, const std::string filename) {
+    std::ofstream outfile;
+    outfile.open(filename);
+    outfile << "digraph {" << std::endl;
+    outfile << VertexColoredPrinting(colors) << printEdges() << "}\n";
+    outfile.close();
+}
+template <typename TVertex> 
+void GraphOutput<TVertex> :: createDotFile(const std::string filename) {
     std::ofstream outfile;
     outfile.open(filename);
     outfile << "digraph {" << std::endl;

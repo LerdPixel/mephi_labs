@@ -1,10 +1,12 @@
 #pragma once
 
 #include <limits>
+#include <vector>
 
 #include "containers/smart_ptrs/shared_ptr.h"
 #include "containers/SmartPtrLinkedListSequence.h"
 #include "containers/HashTable.h"
+#include "containers/IDictionary.h"
 #include "Edges.h"
 #include "Path.h"
 #include "containers/SortedSequence.h"
@@ -80,44 +82,37 @@ public:
         }
         return path;
     }
- /*    IDictionary<TVertex, int>* Color() {
-		IDictionary<TVertex, int>* coloredVertices = HashTable<TVertex, int>(this->dictionary.GetCapacity());
+    shared_ptr<IDictionary<TVertex, int>> Coloring() {
+		shared_ptr<IDictionary<TVertex, int>> coloredVertices = shared_ptr<IDictionary<TVertex, int>>(new HashTable<TVertex, int>(this->dictionary.GetCapacity()));
 		std::vector<bool> usedColors;
-
-		for (std::size_t i = 0; i < vertices.size(); i++)
-		{
+        auto verticies = this->GetVertices();
+        auto currentVertex = verticies->GetEnumerator();
+		for (int i = 0; i < verticies->GetLength(); ++i) {
 			usedColors.push_back(false);
 		}
 
-		for (std::size_t j = 0; j < vertices.size(); j++)
-		{
-			TVertex currentVertex = vertices[j];
-			std::vector<Edge>adjVertices = container->Get(currentVertex);
-			for (std::size_t i = 0; i < adjVertices.size(); i++)
-			{
-				if (coloredVertices->ContainsKey(adjVertices[i].second()))
-					usedColors[coloredVertices->Get(adjVertices[i].second())] = true;
+		while (currentVertex->next()) {
+			auto eInternal = this->dictionary.Get(**currentVertex).GetKey().GetEnumerator(), eExternal = this->dictionary.Get(**currentVertex).GetValue().GetEnumerator();
+			while (eInternal->next()) {
+				if (coloredVertices->ContainsKey((**eInternal).GetDestVertex()))
+					usedColors[coloredVertices->Get((**eInternal).GetDestVertex())] = true;
 			}
-
+            while (eExternal->next()) {
+				if (coloredVertices->ContainsKey((**eExternal).GetDestVertex()))
+					usedColors[coloredVertices->Get((**eExternal).GetDestVertex())] = true;
+			}
 			int currentColor = 0;
-
-			for (std::size_t i = 0; i < usedColors.size(); i++)
-			{
-				if (!usedColors[i])
-				{
+			for (int i = 0; i < usedColors.size(); ++i) {
+				if (!usedColors[i]) {
 					currentColor = i;
 					break;
 				}
 			}
-
-			coloredVertices->Add(currentVertex, currentColor);
-
-			for (std::size_t i = 0; i < vertices.size(); i++)
-			{
+			coloredVertices->Add(**currentVertex, currentColor);
+			for (std::size_t i = 0; i < verticies->GetLength(); ++i) {
 				usedColors[i] = false;
 			}
 		}
-
 		return coloredVertices;
-	} */
+	}
 };

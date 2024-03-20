@@ -1,14 +1,9 @@
 digraph {
-V
+r
 A
-F
-H
+B
+G
 Y
-C
-V -> H[label="10"]
-A -> C[label="10"]
-A -> F[label="5"]
-F -> Y[label="1.5"]
-Y -> H[label="5"]
-C -> V[label="7"]
+A -> B[label="1"]
+G -> Y[label="10"]
 }

@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <cstdio>
 #include "Graph.h"
 #include "WeightEdge.h"
 #include "ConnectionPoint.h"
@@ -7,36 +8,69 @@
 #include <string>
 #include "UI/GraphOutput.h"
 #include "UI/GraphInput.h"
+#include "UI/IntInput.h"
+#include "UI/WordInput.h"
 #include "GraphAlgorithms.h"
 
-void EdgeInput(shared_ptr<Graph<ConnectionPoint, double>> graphPointer, GraphOutput<ConnectionPoint>& out) {
-    while(GraphInput(graphPointer)) {
-        out.createDotFile();
+void EdgesInput(shared_ptr<Graph<ConnectionPoint, double>> graphPointer, GraphOutput<ConnectionPoint>& out) {
+    while(EdgeInput(graphPointer, std::bind(&Graph<ConnectionPoint, double>::AddEdge, *graphPointer, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3))) {
+                out.createDotFile();
+    }
+}
+void VerteciesInput(shared_ptr<Graph<ConnectionPoint, double>> graphPointer, GraphOutput<ConnectionPoint>& out) {
+    
+}
+int graphOptionInput() {
+    std::cout << "Choose an action:\n0 - Add edges; 1 - Add vertex; 2 - Delete Vertex; 3 - Delete Edge;\n";
+    return intInput();
+}
+void graphEdit(shared_ptr<Graph<ConnectionPoint, double>> graphPointer, GraphOutput<ConnectionPoint>& out) {
+    std::cout << "Choose an action:\n0 - Add edges; 1 - Add vertex; 2 - Delete Vertex; 3 - Delete Edge; any nomber - exit\n";
+    switch (intInput()) {
+        case 0:
+            EdgesInput(graphPointer, out);
+            break;
+        case 1:
+            while(VertexInput(graphPointer, std::bind(&Graph<ConnectionPoint, double>::AddVertex, *graphPointer, std::placeholders::_1))) {
+                out.createDotFile();
+            }
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
     }
 }
 
 
-int main() {
-    auto graphPointer = shared_ptr<Graph<ConnectionPoint, double >>(new Graph<ConnectionPoint, double>()); // Create a new graph
-    GraphOutput out(graphPointer);
-    EdgeInput(graphPointer, out);
-
-     EdgeInput(graphPointer, out);
+int menu() {
+    auto graphPointer = shared_ptr<Graph<ConnectionPoint, double >>(new Graph<ConnectionPoint, double>()); // a new graph
     GraphAlgorithms<ConnectionPoint, double>  algo(*graphPointer);
-    while (true) {
-        std::string input, vertex1, vertex2;
-        std::cout << "Enter vertecies (word1 word2), algorithm calculate distance between them " << std::endl;
-        std::getline(std::cin, input);
-        if (input.empty())     // Check if input is empty, if so, return false
-            break;
-        std::istringstream iss(input); // Parse the input string
-        if (iss >> vertex1 >> vertex2) {
-            PrintPath<ConnectionPoint>(algo.Dijkstra(ConnectionPoint(vertex1), ConnectionPoint(vertex2)));
-        } else {
-            // If parsing fails, skip the input
-            std::cout << "Invalid format. Skipping." << std::endl;
+    GraphOutput out(graphPointer); // output
+    EdgesInput(graphPointer, out);
+    bool continueCode = true;
+    while (continueCode) {
+        std::cout << "Choose an option:\n0 - exit; 1 - Edit graph; 2 - Finding shortest paths; 3 - Graph coloring;\n\n";
+        switch (intInput()) {
+            case 0:
+                continueCode = false;
+                break;
+            case 1:
+                graphEdit(graphPointer, out);
+                break;
+            case 2:
+                std::cout << "Enter vertecies (word1 word2), algorithm calculate distance between them " << std::endl;
+                PrintPath<ConnectionPoint>(algo.Dijkstra(ConnectionPoint(wordInput()), ConnectionPoint(wordInput())));
+                break;
+            case 3:
+                out.createColoredDotFile(algo.Coloring());
+                break;
         }
-        
     }
+    return 0;
+}
+
+int main() {
+    menu();
     return 0;
 }
