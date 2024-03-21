@@ -1,8 +1,13 @@
 digraph {
 A [color=aqua]
-B [color=aqua]
+B [color=chartreuse]
+F [color=brown1]
+H [color=aqua]
 C [color=chartreuse]
-A -> B[label="1"]
-B -> C[label="1"]
-B -> A[label="1"]
+A -> B[label="10"]
+A -> F[label="18"]
+F -> C[label="19"]
+F -> B[label="10"]
+H -> F[label="1"]
+C -> H[label="4"]
 }

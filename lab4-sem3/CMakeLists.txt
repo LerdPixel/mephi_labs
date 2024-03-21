@@ -15,7 +15,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 enable_testing()
 
-set(SOURCE_FILES source/main.cpp source/UI/IntInput.cpp source/UI/WordInput.cpp)
+set(SOURCE_FILES source/main.cpp source/UI/IntInput.cpp source/UI/WordInput.cpp source/UI/menu.cpp)
 
 add_executable(my_program.out ${SOURCE_FILES})
 
