@@ -1,11 +1,11 @@
 #include <string>
 #include <iostream>
 #include <cstdio>
+#include <utility>
 #include "Graph.h"
 #include "WeightEdge.h"
 #include "ConnectionPoint.h"
 #include "containers/SmartPtrLinkedListSequence.h"
-#include <string>
 #include "UI/GraphOutput.h"
 #include "UI/GraphInput.h"
 #include "UI/IntInput.h"
@@ -14,7 +14,7 @@
 
 void EdgesInput(shared_ptr<Graph<ConnectionPoint, double>> graphPointer, GraphOutput<ConnectionPoint>& out) {
     while(EdgeInput(graphPointer, std::bind(&Graph<ConnectionPoint, double>::AddEdge, *graphPointer, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3))) {
-                out.createDotFile();
+        out.createDotFile();
     }
 }
 void VerteciesInput(shared_ptr<Graph<ConnectionPoint, double>> graphPointer, GraphOutput<ConnectionPoint>& out) {
@@ -45,12 +45,13 @@ void graphEdit(shared_ptr<Graph<ConnectionPoint, double>> graphPointer, GraphOut
 
 int menu() {
     auto graphPointer = shared_ptr<Graph<ConnectionPoint, double >>(new Graph<ConnectionPoint, double>()); // a new graph
+
     GraphAlgorithms<ConnectionPoint, double>  algo(*graphPointer);
     GraphOutput out(graphPointer); // output
     EdgesInput(graphPointer, out);
     bool continueCode = true;
     while (continueCode) {
-        std::cout << "Choose an option:\n0 - exit; 1 - Edit graph; 2 - Finding shortest paths; 3 - Graph coloring;\n\n";
+        std::cout << "Choose an option:\n0 - exit; 1 - Edit graph; 2 - Finding shortest paths; 3 - Graph coloring; 4 - Finding Strongly Connected Components;\n\n";
         switch (intInput()) {
             case 0:
                 continueCode = false;
@@ -65,6 +66,12 @@ int menu() {
             case 3:
                 out.createColoredDotFile(algo.Coloring());
                 break;
+            case 4:
+                out.createColoredDotFile(algo.StronglyConnectedComponents());
+                break;
+            case 5:
+                std::string name = wordInput();
+                std::cout << algo.DFS(ConnectionPoint(name))->GetLength() << '\n' << algo.ReverseDFS(ConnectionPoint(name))->GetLength() << '\n';
         }
     }
     return 0;

@@ -1,9 +1,8 @@
 digraph {
-r
-A
-B
-G
-Y
+A [color=aqua]
+B [color=aqua]
+C [color=chartreuse]
 A -> B[label="1"]
-G -> Y[label="10"]
+B -> C[label="1"]
+B -> A[label="1"]
 }

@@ -27,6 +27,7 @@ protected:
 public:
 	HashTable();
 	HashTable(size_t capacity);
+	HashTable(shared_ptr<Sequence<TKey>> sequencePtr, TValue value);
 	~HashTable() {}
 	inline int GetLength() override { return length; }
 
@@ -72,6 +73,16 @@ HashTable<TKey, TValue> :: HashTable() : capacity(DEFAULT_CAPACITY), length(0) {
 template <typename TKey, typename TValue>
 HashTable<TKey, TValue> :: HashTable(size_t capacity) : capacity(capacity), length(0) {
 	container = emptySequence(capacity);
+}
+template <typename TKey, typename TValue>
+HashTable<TKey, TValue> :: HashTable(shared_ptr<Sequence<TKey>> sequencePtr, TValue value) : length(sequencePtr->GetLength()), capacity(sequencePtr->GetLength() + 1) {
+	container = emptySequence(capacity);
+	auto e = sequencePtr->GetEnumerator();
+	size_t index;
+	while(e->next()) {
+		index = Hash{}(**e) % capacity;
+		((*container)[index])->Prepend(Pair<TKey, TValue>(**e, value));
+	}
 }
 template <typename TKey, typename TValue>
 void HashTable<TKey, TValue> :: Add(TKey key, TValue item) {
