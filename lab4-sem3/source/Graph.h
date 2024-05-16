@@ -12,7 +12,6 @@ protected:
 public:
     Graph() : dictionary(10) {}
     Graph(shared_ptr<Sequence<TVertex>> vertices);
-    //Graph(const Graph& other); // Copy constructor
     ~Graph() {} // Destruct
     bool ContainsVertex(TVertex vertex);
     void AddEdge(TVertex vertex1, TVertex vertex2, TWeight weight);
@@ -28,14 +27,6 @@ Graph<TVertex, TWeight> :: Graph(shared_ptr<Sequence<TVertex>> vertices) {
         dictionary.Add(**e, Pair<Edges<TVertex, TWeight>, Edges<TVertex, TWeight>>(Edges<TVertex, TWeight>(), Edges<TVertex, TWeight>()));
     }
 }
-/* template <typename TVertex, typename TWeight>
-Graph<TVertex, TWeight> :: Graph(const Graph& other) {
-    auto pairs = other.GetEdgesAndVertices();
-    auto e = pairs->GetEnumerator();
-    while (e->next()) {
-        dictionary.Add((**e).GetKey(), (**e).GetValue());
-    }
-} */
 template <typename TVertex, typename TWeight>
 bool Graph<TVertex, TWeight> :: ContainsVertex(TVertex vertex) {
     return dictionary.ContainsKey(vertex);

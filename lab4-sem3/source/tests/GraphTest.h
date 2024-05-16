@@ -39,13 +39,19 @@ TEST_F(GraphTests, GraphTests_Delete_Edge_1) {
     ASSERT_TRUE(graph->ContainsVertex("H"));    
     ASSERT_EQ(graph->GetVertices()->GetLength(), 7);
 }
-/* TEST_F(GraphTests, GraphTests_CopyConstructor) {
-    graph->AddEdge("H","G", 8);
-    shared_ptr<Graph<std::string, shared_ptr<WeightEdge<std::string>> >> graph2(new Graph<std::string, shared_ptr<WeightEdge<std::string>>>(*graph));
-    ASSERT_TRUE(graph2->ContainsVertex("G"));
-    ASSERT_TRUE(graph2->ContainsVertex("H"));
-    ASSERT_EQ(graph->GetVertices()->GetLength(), 7);
-}
+class dickClass {
+    int a;
+public:
+    dickClass() : a(666) {}
+    dickClass(int _a) : a(_a) {}
+};
+ TEST_F(GraphTests, GraphTests_RandWeight) {
+    Graph<std::string, dickClass > graph = Graph<std::string, dickClass >();
+
+    graph.AddEdge("H", "G", dickClass(3));
+    ASSERT_TRUE(graph.ContainsVertex("G"));
+    ASSERT_TRUE(graph.ContainsVertex("H"));
+}/*
 TEST_F(GraphTests, GraphTests_CopyConstructor_2) {
     shared_ptr<Graph<std::string, shared_ptr<WeightEdge<std::string>> >> graph2(new Graph<std::string, shared_ptr<WeightEdge<std::string>>>(*graph));
     graph2->AddEdge("H", make_shared<WeightEdge<std::string>>("G", 8));
